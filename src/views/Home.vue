@@ -1,5 +1,44 @@
 <template>
   <div class="home">    
+
+
+
+      <h1>Weekly Boxoffice Movies</h1>
+ <div class="img d-flex justify-content-center">
+     <carousel-3d
+     :height="390"
+     
+     controls-visible="true"
+     :clickable="true"
+      :width='250'
+      ref="treeExplorer"
+      :space="400"
+      :count="weeklyBoxOfficeMovieList.length"
+      :display="7"
+      :border="0"
+     >
+    <slide class="carousel-3d-item" v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">
+      <div @click="imgClick(item)" style="cursor:pointer;">
+      <figcaption>
+      <img :src="img_path + movie.poster_path" style="height: 100%;">
+      <p class="text-center font-weight-bold align-bottom">{{movie.title}}</p>
+      <!-- <p>{{movie.overview}}</p> -->
+      </figcaption>
+      </div>
+      <Modal v-if ="movie"></Modal>
+    </slide>
+  </carousel-3d>
+  
+ </div>
+ <h1>뷰티파이</h1>
+  <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
+      <MovieCard
+      data-app
+        v-for="(movie, idx) in weeklyBoxOfficeMovieList"
+        :key="idx"
+        :movie="movie"/>
+  </div>
+
     <!-- 1. Weekly Boxoffice Area -->
     <h1>Weekly Boxoffice Movies</h1>
     <div class="container">
@@ -20,9 +59,9 @@
       <iframe :src="videoUrl" frameborder="0"></iframe>
     </div> 
     -->
-    <hr>
-    <div class="container">
       <!-- 2. 해쉬태그 순  -->
+    <!-- <hr>
+    <div class="container">
       <h3 style="text-align: left">#커피와(과) 관련된 영화들</h3>
       <div class="row g-4">
         <div class="col-2 card"
@@ -40,12 +79,14 @@
 
       <h3 style="text-align: left">#겨울와(과) 관련된 영화들</h3>    
 
-    </div>
+    </div> -->
     
   </div>
 </template>
 
 <script>
+import { Carousel3d, Slide } from 'vue-carousel-3d';
+import MovieCard from '@/components/MovieCard'
 import axios from 'axios'
 // 1114 django local host url
 const URL = 'http://127.0.0.1:8000/'
@@ -57,6 +98,12 @@ export default {
       weeklyBoxOfficeMovieList: [],
       img_path : "https://image.tmdb.org/t/p/w300/"
     }
+  },
+  components: {
+    // ImgCarousel,
+   Carousel3d,
+    Slide,
+    MovieCard
   },
   methods: {
     
@@ -95,6 +142,7 @@ export default {
       .then( res => {
         console.log(res.data)
         this.weeklyBoxOfficeMovieList = res.data
+      
       })
       .catch( err => {
         console.log(err)

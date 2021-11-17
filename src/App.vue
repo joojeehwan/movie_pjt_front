@@ -2,9 +2,9 @@
   <div id="app">
     <!-- 1. nav bar -->    
     <navbar></navbar>
-    <!-- 2. main °ø°£ -->
+    <!-- 2. main  -->
     <Main></Main>
-    <div id="nav">
+    <!-- <div id="nav">
       <span v-if="isLogin">
         <router-link :to="{ name: 'TodoList' }">Todo List</router-link> | 
         <router-link :to="{ name: 'CreateTodo' }">Create Todo</router-link> |
@@ -15,7 +15,7 @@
         <router-link :to="{ name: 'Login' }">Login</router-link> 
       </span>
     </div>
-    <router-view @login="isLogin=true"/>
+    <router-view @login="isLogin=true"/> -->
   </div>
 </template>
 
