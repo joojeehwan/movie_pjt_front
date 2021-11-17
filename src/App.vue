@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <!-- 1. nav bar -->    
+    <navbar></navbar>
+    <!-- 2. main °ø°£ -->
+    <Main></Main>
     <div id="nav">
       <span v-if="isLogin">
         <router-link :to="{ name: 'TodoList' }">Todo List</router-link> | 
@@ -16,8 +20,15 @@
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue'
+import Main from './components/Main.vue'
+
 export default {
   name: 'App',
+  components: {
+    Navbar,
+    Main,
+  },
   data: function () {
     return {
       isLogin: false,
@@ -42,6 +53,7 @@ export default {
 }
 </script>
 
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -51,14 +63,14 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+/* #nav {
   padding: 30px;
-}
+} */
 
-#nav a {
+/* #nav a {
   font-weight: bold;
   color: #2c3e50;
-}
+} */
 
 #nav a.router-link-exact-active {
   color: #42b983;

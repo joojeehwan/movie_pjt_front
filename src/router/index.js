@@ -4,10 +4,34 @@ import TodoList from '@/views/todos/TodoList'
 import CreateTodo from '@/views/todos/CreateTodo'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
+import Home from '@/views/Home.vue'
+import Index from '@/views/Community'
+import TheSearch from '@/views/TheSearch'
+
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/accounts/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/community',
+    name: 'Index',
+    component: Index
+  },
+  {
+    path: '/search/:searchKeyword',
+    name: 'Search',
+    component: TheSearch
+  },
   {
     path: '/todos',
     name: 'TodoList',
@@ -23,11 +47,7 @@ const routes = [
     name: 'Signup',
     component: Signup,
   },
-  {
-    path: '/accounts/login',
-    name: 'Login',
-    component: Login,
-  },
+
 ]
 
 const router = new VueRouter({
