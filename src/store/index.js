@@ -54,7 +54,7 @@ export default new Vuex.Store({
    
     // MOVIES MUTATIONS
     GET_MOVIES(state, res) {
-      state.movies = res
+      state.movies.push(res)
     },
     GET_MOVIE_TITLES(state, res) {
       const tmp_list = []
@@ -71,10 +71,10 @@ export default new Vuex.Store({
     },
     // COMMUNITY MUTATIONS
     GET_REVIEWS(state, res) {
-      state.reviews = res
+      state.reviews.push(res)
     },
     CREATE_REVIEW(state, res) {
-      state.reviews.push(res)
+      state.reviews = res
     },
     UPDATE_REVIEW(state, reviewItem) {
       state.reviews = state.reviews.map((review) => {
@@ -142,7 +142,7 @@ export default new Vuex.Store({
       .catch(err => console.log(err))
     },
     // COMMUNITY - REVIEW ACTIONS
-    getReviews({commit}, token) {
+    getReviews({commit},token) {
       axios({
         method: 'GET',
         url: `${SERVER_URL}community/`,

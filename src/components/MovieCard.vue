@@ -32,7 +32,7 @@
         <v-list-item-content>
               <v-list-item-title>{{movie.title}}</v-list-item-title>
               <v-list-item-subtitle>{{movie.overview}}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{getGenre(movie.genre_ids)}}</v-list-item-subtitle>
+              <!-- <v-list-item-subtitle>{{getGenre(movie.genre_ids)}}</v-list-item-subtitle> -->
         </v-list-item-content>
      
       </div>

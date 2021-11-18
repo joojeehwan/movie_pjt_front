@@ -3,7 +3,7 @@
     <header>
       <h2>리뷰 게시판</h2>
     </header>
-    <CommunityForm/>
+    <CommunityForm data-app/>
     <CommunityHome/>
   </div>
   

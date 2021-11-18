@@ -6,8 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import vueMoment from 'vue-moment'
+
 
 Vue.use(BootstrapVue)
+Vue.use(vueMoment)
 Vue.config.productionTip = false
 
 new Vue({

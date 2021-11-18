@@ -1,15 +1,10 @@
 <template>
   <div class="home">    
-
-
-
       <h1>Weekly Boxoffice Movies</h1>
  <div class="img d-flex justify-content-center">
      <carousel-3d
      :height="390"
-     
-     controls-visible= true
-     :clickable="true"
+     :clickable= true
       :width='250'
       ref="treeExplorer"
       :space="400"
@@ -18,14 +13,13 @@
       :border="0"
      >
     <slide class="carousel-3d-item" v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">
-      <div @click="imgClick(item)" style="cursor:pointer;">
+      <div  style="cursor:pointer;">
       <figcaption>
       <img :src="img_path + movie.poster_path" style="height: 100%;">
       <p class="text-center font-weight-bold align-bottom">{{movie.title}}</p>
       <!-- <p>{{movie.overview}}</p> -->
       </figcaption>
       </div>
-      <Modal v-if ="movie"></Modal>
     </slide>
   </carousel-3d>
   
@@ -89,6 +83,7 @@
 import { Carousel3d, Slide } from 'vue-carousel-3d';
 import MovieCard from '@/components/MovieCard'
 import axios from 'axios'
+
 // 1114 django local host url
 const URL = 'http://127.0.0.1:8000/'
 
@@ -155,7 +150,7 @@ export default {
         url: URL + "movies/searchHashtagMovies/1/"
       })
       .then(res =>{
-        console.log(res.data)
+      console.log(res.data)
        this.HashtagMovieList = res.data["movies"]
        this.nameHashTag = res.data["hashtag"]
         
