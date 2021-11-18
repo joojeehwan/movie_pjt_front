@@ -1,7 +1,9 @@
 <template>
-  <div>    
-    <h1>community</h1>
-    <p>create</p>    
+  <div class="community">
+    <header>
+      <h2>리뷰 게시판</h2>
+    </header>
+    <CommunityForm/>
     <CommunityHome/>
   </div>
   
@@ -9,16 +11,13 @@
 
 <script>
 import CommunityHome from '@/components/CommunityHome'
+import CommunityForm from "@/components/CommunityForm"
 
 export default {
   name: 'Index',
   components: {
     CommunityHome,
-  },
-  data: function () {
-    return {
-      articles: [],
-    }
+    CommunityForm,
   },
 }
 </script>

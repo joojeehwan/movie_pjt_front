@@ -8,7 +8,7 @@
      <carousel-3d
      :height="390"
      
-     controls-visible="true"
+     controls-visible= true
      :clickable="true"
       :width='250'
       ref="treeExplorer"
@@ -142,7 +142,7 @@ export default {
       // params
     })
       .then( res => {
-        //console.log(res.data)
+        console.log(res.data)
         this.weeklyBoxOfficeMovieList = res.data
       
       })
