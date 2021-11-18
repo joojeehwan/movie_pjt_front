@@ -150,14 +150,14 @@ export default {
     getGenre: function (genre_ids) {
 
 
-      var result = ''
-      var dummy = ''
+      var result = []
+  
       for (var i=0; i < genre_ids.length; i++) {
         if (genre_ids[i] in this.genres) {
-          const result = `${result} ${dummy}`
+          result.push(this.genres[i]["name"])
         }
       }
-      if (result) {
+      if (result.length>0) {
         return result
       } else {
         const noGenreMessage = 'No Genre Defined'
