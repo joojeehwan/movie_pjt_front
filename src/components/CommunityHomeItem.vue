@@ -1,10 +1,13 @@
 <template>
    <div>
-      <v-expansion-panel-header>
-   {{review[0].movie_title}}   
-   {{review[0].title}}   
-   {{review[0].created_at | moment('YYYY-MM-DD HH:mm:ss') }}   
-   {{review[0].title}}   
+      <v-expansion-panel-header
+       v-for="res in review"
+       :key=res.id
+       >
+   {{res.movie_title}}   
+   {{res.title}}   
+   {{res.created_at | moment('YYYY-MM-DD HH:mm:ss') }}   
+   {{res.title}}   
         </v-expansion-panel-header>
 
     <v-expansion-panel-content>

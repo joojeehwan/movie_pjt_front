@@ -24,7 +24,7 @@
   </carousel-3d>
   
  </div>
- <h1>뷰티파이</h1>
+ <h1>#평점이 높은</h1>
   <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
       <MovieCard
       data-app
@@ -82,7 +82,9 @@
 <script>
 import { Carousel3d, Slide } from 'vue-carousel-3d';
 import MovieCard from '@/components/MovieCard'
+//import { mapGetters } from 'vuex'
 import axios from 'axios'
+
 
 // 1114 django local host url
 const URL = 'http://127.0.0.1:8000/'
@@ -103,10 +105,25 @@ export default {
     Slide,
     MovieCard
   },
+  // computed: {
+  //    ...mapGetters([
+  //     "weeklyBoxOfficeMovieList"
+  //   ])
+  // },
   methods: {
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
+    getWeeklyBoxOfficeMovieList: function() {
+      this.$store.commit("getWeeklyBoxOfficeMovieList", this.setToken)
+    },
     },
   // 화면 전환 시 로딩 오래 걸리는 것 수정
-  computed: {
+  watch: {
     // videoUrl: function () {
     //   const videoId = 'DJs_ihmMZfg'// this.video.id.videoId
     //   return `https://www.youtube.com/embed/${videoId}`
@@ -130,10 +147,12 @@ export default {
     // },
     
   },
+
   created() {
+    //this.getWeeklyBoxOfficeMovieList()
     axios({
       method: 'get',
-      url: URL+'movies/searchWeeklyBoxOfficeMovies',
+      url: URL+'movies/searchTopRatedMovies/',
       // params
     })
       .then( res => {
@@ -145,19 +164,19 @@ export default {
         console.log(err)
       })
       
-      axios({
-        method: "get", 
-        url: URL + "movies/searchHashtagMovies/1/"
-      })
-      .then(res =>{
-      console.log(res.data)
-       this.HashtagMovieList = res.data["movies"]
-       this.nameHashTag = res.data["hashtag"]
+    //   axios({
+    //     method: "get", 
+    //     url: URL + "movies/searchHashtagMovies/1/"
+    //   })
+    //   .then(res =>{
+    //   console.log(res.data)
+    //    this.HashtagMovieList = res.data["movies"]
+    //    this.nameHashTag = res.data["hashtag"]
         
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   }
 }
 </script>

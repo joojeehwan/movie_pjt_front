@@ -12,6 +12,7 @@
         :src="imgSrc" alt="포스터 없음"
         v-bind="attrs"
         v-on="on"
+        @click="callAxios"
       >
     </v-img>
   </template>
@@ -30,8 +31,12 @@
         </div>
 
         <v-list-item-content>
-              <v-list-item-title>{{movie.title}}</v-list-item-title>
-              <v-list-item-subtitle>{{movie.overview}}</v-list-item-subtitle>
+              <v-list-item-title>{{movieDetailInformation.title}}</v-list-item-title>
+              <v-list-item-subtitle>{{movieDetailInformation.release_date}}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{movieDetailInformation.vote_average}}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{movieDetailInformation.genres_list}}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{movieDetailInformation.actors_list}}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{movieDetailInformation.overview}}</v-list-item-subtitle>              
               <!-- <v-list-item-subtitle>{{getGenre(movie.genre_ids)}}</v-list-item-subtitle> -->
         </v-list-item-content>
      
@@ -44,6 +49,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+const URL = 'http://127.0.0.1:8000/'
 export default {
   name:"MovieCard",
   props: {
@@ -54,90 +61,14 @@ export default {
   },
     data() {
     return {
-      genres_name : "" ,
+      //뷰티파이
       dialog: false,
       notifications: false,
       sound: true,
       widgets: false,
-      genres: [
-          {
-            "id": 28,
-            "name": "액션"
-          },
-          {
-            "id": 12,
-            "name": "모험"
-          },
-          {
-            "id": 16,
-            "name": "애니메이션"
-          },
-          {
-            "id": 35,
-            "name": "코미디"
-          },
-          {
-            "id": 80,
-            "name": "범죄"
-          },
-          {
-            "id": 99,
-            "name": "다큐멘터리"
-          },
-          {
-            "id": 18,
-            "name": "드라마"
-          },
-          {
-            "id": 10751,
-            "name": "가족"
-          },
-          {
-            "id": 14,
-            "name": "판타지"
-          },
-          {
-            "id": 36,
-            "name": "역사"
-          },
-          {
-            "id": 27,
-            "name": "공포"
-          },
-          {
-            "id": 10402,
-            "name": "음악"
-          },
-          {
-            "id": 9648,
-            "name": "미스터리"
-          },
-          {
-            "id": 10749,
-            "name": "로맨스"
-          },
-          {
-            "id": 878,
-            "name": "SF"
-          },
-          {
-            "id": 10770,
-            "name": "TV 영화"
-          },
-          {
-            "id": 53,
-            "name": "스릴러"
-          },
-          {
-            "id": 10752,
-            "name": "전쟁"
-          },
-          {
-            "id": 37,
-            "name": "서부"
-          }
-      ],
 
+      //상세정보
+      movieDetailInformation: []
     }
   },
   computed: {
@@ -146,43 +77,24 @@ export default {
     },
   },
   methods: {
-
-    getGenre: function (genre_ids) {
-
-
-      var result = []
-  
-      for (var i=0; i < genre_ids.length; i++) {
-        if (genre_ids[i] in this.genres) {
-          result.push(this.genres[i]["name"])
-        }
-      }
-      if (result.length>0) {
-        return result
-      } else {
-        const noGenreMessage = 'No Genre Defined'
-        return noGenreMessage
-      }
-
-    //   const newGeners = this.genres.map((genre)=> {
-    //       return genre.id
-    //   })
-
-    //   console.log(this.genres)
-
-    //   const resGeners = newGeners.filter(id => genere_ids.includes(id))
-    //   console.log(resGeners)
-
-    //  var result = []
-     
-    //   for (var i=0;resGeners.length;i++) {
-    //       if (resGeners[i] in this.genres["id"]){
-    //         result.push(this.genres["name"])
-    //       }
-    //   }
-    //   console.log(result)
-  
-    }
+    callAxios: function() {
+      var detailTmdbID = this.movie.tmdb_id
+      console.log(detailTmdbID)
+      console.log("이걸 누르면 이게 뜬다. 이거에 맞는")
+      axios({
+      method: 'get',
+      url: URL+`movies/${detailTmdbID}/`,
+      // params
+    })
+      .then( res => {
+        console.log(res.data)
+        this.movieDetailInformation = res.data
+      
+      })
+      .catch( err => {
+        console.log(err)
+      })
+    },
   }
 }
 

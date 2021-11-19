@@ -9,7 +9,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-   
+    //weeklyBoxOfficeMovieList: [],
+    weeklyBoxOfficeMovieList: [],
     // movies
     movies: [],
     genre_names: [],
@@ -22,6 +23,9 @@ export default new Vuex.Store({
    
   },
   getters: {
+    weeklyBoxOfficeMovieList(state) {
+      return state.weeklyBoxOfficeMovieList
+    },
     movies(state) {
       return state.movies
     },
@@ -51,6 +55,13 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+
+
+    //GET_WEEKLY_BOX_OFFICE_MOVIE_LIST
+
+    GET_WEEKLY_BOX_OFFICE_MOVIE_LIST(state, res) {
+      state.weeklyBoxOfficeMovieList.push(res)
+    },
    
     // MOVIES MUTATIONS
     GET_MOVIES(state, res) {
@@ -116,6 +127,24 @@ export default new Vuex.Store({
    
   },
   actions: {
+    //getWeeklyBoxOfficeMovieList
+    getWeeklyBoxOfficeMovieList({commit}, token) {
+      axios({
+        method: 'get',
+        url: SERVER_URL+'movies/searchWeeklyBoxOfficeMovies',
+        headers: token
+        // params
+      })
+        .then( res => {
+          // console.log(res.data)
+          commit("GET_WEEKLY_BOX_OFFICE_MOVIE_LIST", res.data) 
+        
+        })
+        .catch( err => {
+          console.log(err)
+        })
+
+    },
    
     // MOVIES ACTIONS
     getMovies({commit}, token) {
