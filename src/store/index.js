@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import router from '@/router'
+//import router from '@/router'
 
 const SERVER_URL = 'http://127.0.0.1:8000/'
 
@@ -82,7 +82,7 @@ export default new Vuex.Store({
     },
     // COMMUNITY MUTATIONS
     GET_REVIEWS(state, res) {
-      state.reviews.push(res)
+      state.reviews = res
     },
     CREATE_REVIEW(state, res) {
       state.reviews = res
@@ -101,6 +101,7 @@ export default new Vuex.Store({
     },
     DELETE_REVIEW(state, reviewItem) {
       const index = state.reviews.indexOf(reviewItem)
+
       state.reviews.splice(index, 1)
     },
     CREATE_COMMENT(state, res) {
@@ -150,10 +151,11 @@ export default new Vuex.Store({
     getMovies({commit}, token) {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}movies/`,
+        url: `${SERVER_URL}movies/searchWeeklyBoxOfficeMovies`,
         headers: token,
       })
       .then(res => {
+       // console.log(res)
         commit('GET_MOVIES', res.data)
         commit('GET_MOVIE_TITLES', res.data)
       })
@@ -166,6 +168,7 @@ export default new Vuex.Store({
         headers: token
       })
       .then((res) => {
+
         commit('GET_GENRES', res.data)
       })
       .catch(err => console.log(err))
@@ -178,6 +181,7 @@ export default new Vuex.Store({
         headers: token,
       })
       .then(res => {
+        //console.log(res)
         commit('GET_REVIEWS', res.data)
       })
       .catch(err => console.log(err))
@@ -185,25 +189,26 @@ export default new Vuex.Store({
     createReview({commit}, objs) {
       axios({
         method: 'POST',
-        url: `${SERVER_URL}community/reviews/`,
+        url: `${SERVER_URL}community/`,
         data: objs.reviewItem,
         headers: objs.token
       })
       .then(() => {
         commit('CREATE_REVIEW')
-        router.push({name: 'Community'})
-        router.go()
+        // router.push({name: 'Community'})
+        // router.go()
       })
       .catch(err => console.log(err))
     },
     updateReview({commit}, objs) {
       axios({
         method: 'PUT',
-        url: `${SERVER_URL}community/reviews/${objs.review_id}/`,
+        url: `${SERVER_URL}community/${objs.review_id}/`,
         data: objs.reviewItem,
         headers: objs.token
       })
       .then(() => {
+        console.log("업데이트 성공")
         commit('UPDATE_REVIEW')
       })
       .catch(err => console.log(err))
@@ -211,17 +216,77 @@ export default new Vuex.Store({
     deleteReview({commit}, objs) {
       axios({
         method: 'DELETE',
-        url: `${SERVER_URL}community/reviews/${objs.review_id}/`,
+        url: `${SERVER_URL}community/${objs.review_id}/`,
         headers: objs.token
       })
       .then(() => {
+        console.log("삭제 성공")
         commit('DELETE_REVIEW')
-        router.go()
+       //router.go()
       })
       .catch(err => console.log(err))
     },
-    
-    
+    //Commuity - COMMENT ACTTONS
+    getComments({commit}, objs) {
+      axios({
+        method: "GET", 
+        url:`${SERVER_URL}community/${objs.review_id}/comments/`,
+        headers: objs.token
+      })
+      .then(res=> {
+        commit("GET_COMMENTS", res.data)
+      })
+      .catch(err=> {
+        console.lot(err)
+      })
+    }, 
+    createComment({commit}, objs) {
+      axios({
+        method: 'POST',
+        url: `${SERVER_URL}community/reviews/${objs.review_id}/comments/`,
+        data: objs.commentItem,
+        headers: objs.token
+      })
+      .then((res) => {
+        commit('CREATE_COMMENT', res.data)
+      })
+      .catch(err => console.log(err))
+    },
+    readComment({commit}, objs) {
+      axios({
+        method: 'GET',
+        url: `${SERVER_URL}community/comments/${objs.comment_id}/`,
+        headers: objs.token
+      })
+      .then((res) => {
+        commit('READ_COMMENT', res.data)
+      })
+      .catch(err => console.log(err))
+    },
+    updateComment({commit}, objs) {
+      axios({
+        method: 'PUT',
+        url: `${SERVER_URL}community/comments/${objs.comment_id}/`,
+        data: objs.commentItem,
+        headers: objs.token
+      })
+      .then((res) => {
+        commit('UPDATE_COMMENT', res.data)
+      })
+      .catch(err => console.log(err))
+    },
+    deleteComment({commit}, objs) {
+      axios({
+        method: 'DELETE',
+        url: `${SERVER_URL}community/comments/${objs.comment_id}/`,
+        headers: objs.token
+      })
+      .then((res) => {
+        commit('DELETE_COMMENT', res.data)
+      })
+      .catch(err => console.log(err))
+    },
+
   },
   modules: {
 
