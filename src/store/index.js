@@ -243,7 +243,7 @@ export default new Vuex.Store({
     createComment({commit}, objs) {
       axios({
         method: 'POST',
-        url: `${SERVER_URL}community/reviews/${objs.review_id}/comments/`,
+        url: `${SERVER_URL}community/${objs.review_id}/comments/`,
         data: objs.commentItem,
         headers: objs.token
       })
@@ -252,21 +252,10 @@ export default new Vuex.Store({
       })
       .catch(err => console.log(err))
     },
-    readComment({commit}, objs) {
-      axios({
-        method: 'GET',
-        url: `${SERVER_URL}community/comments/${objs.comment_id}/`,
-        headers: objs.token
-      })
-      .then((res) => {
-        commit('READ_COMMENT', res.data)
-      })
-      .catch(err => console.log(err))
-    },
     updateComment({commit}, objs) {
       axios({
         method: 'PUT',
-        url: `${SERVER_URL}community/comments/${objs.comment_id}/`,
+        url: `${SERVER_URL}community/${objs.comment_id}/comments/detail`,
         data: objs.commentItem,
         headers: objs.token
       })
@@ -278,7 +267,7 @@ export default new Vuex.Store({
     deleteComment({commit}, objs) {
       axios({
         method: 'DELETE',
-        url: `${SERVER_URL}community/comments/${objs.comment_id}/`,
+        url: `${SERVER_URL}community/${objs.comment_id}/comments/detail/`,
         headers: objs.token
       })
       .then((res) => {
