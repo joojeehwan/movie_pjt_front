@@ -37,7 +37,8 @@ export default {
     }
   },
   methods: {
-    searchKeyword: function () {
+    searchKeyword: function (inputValue) {
+      console.log(inputValue)
       if(this.$router.currentRoute.params.searchKeyword !== this.inputValue){ 
         console.log(this.inputValue)       
         this.$router.push({ name: 'Search', params: { searchKeyword: this.inputValue }})

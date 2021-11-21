@@ -5,16 +5,18 @@
 
     <div       
       class="row row-cols-1 row-cols-md-5 gy-3 container">
-      <div v-for="(movie, idx) in searchMovieList" :key="idx">
-        {{movie.title}}
-      </div>
-<!-- 
-      <MovieCard
+      <MovieCard data-app v-for="(movie, idx) in searchMovieList" :movie="movie" :key="idx">
+      </MovieCard>
+
+      <!-- <MovieCard
         data-app
         v-for="(movie, idx) in searchMovieList"
         :key="idx"
         :movie="movie"        
       /> -->
+    </div>
+    <div id="result" class="row mt-5" >
+      <h2>검색 결과를 찾을 수 없습니다.</h2>
     </div>
 
   </div>
@@ -22,7 +24,9 @@
 
 <script>
 import axios from 'axios'
-// import MovieCard from '@/components/MovieCard'
+import MovieCard from '@/components/MovieCard'
+
+///movies/searchBarMovies/<movie_query>
 
 export default {
   name: 'Search',
@@ -33,7 +37,7 @@ export default {
     }
   },
   components: {
-    // MovieCard,
+     MovieCard,
   },
   methods:{       
     getSearchBarMovies: function () {      
@@ -50,8 +54,11 @@ export default {
           })        
     }
   },
-  updated: function () {
-    // this.getSearchBarMovies()    
+  created () {
+     this.getSearchBarMovies()    
+  },
+  mounted() {
+    this.getSearchBarMovies
   },
   watch: {
     searchKeyword: function() {
@@ -59,6 +66,7 @@ export default {
     }    
   }
 }
+
 
 </script>
 
