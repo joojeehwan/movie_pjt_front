@@ -8,7 +8,14 @@
               <li><img src="@/assets/logo.png" alt="logo" style="width: 20px"></li>
               <li><router-link to="/" class="nav-link px-2 text-white">Home</router-link></li>
               <li><router-link :to="{ name: 'Index'}" class="nav-link px-2 text-white">Community</router-link></li>
-              <li><router-link :to="{ name: 'Login'}"  class="nav-link px-2 text-white">Login</router-link></li>              
+              <span v-if="isLogin">
+                <li><router-link :to="{ name: 'Login'}"  class="nav-link px-2 text-white">Login</router-link></li>              
+              </span>
+              <span v-else>
+                  <li><router-link @click.native="logout" to="#" class="nav-link px-2 text-white">Logout</router-link></li>              
+              </span>
+              
+
             </ul>
           
             <div class="d-flex gap-3 col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -36,6 +43,11 @@ export default {
       inputValue: null,
     }
   },
+  props: {
+     isLogin: {
+      type: Boolean, 
+    }
+  },
   methods: {
     searchKeyword: function (inputValue) {
       console.log(inputValue)
@@ -44,8 +56,22 @@ export default {
         this.$router.push({ name: 'Search', params: { searchKeyword: this.inputValue }})
       }
       this.inputValue = ''
+    }, 
+    logout: function () {
+      this.isLogin = false
+      localStorage.removeItem('jwt')
+      this.$router.push({ name: 'Login' })
     }
+  },
+    created: function () {
+    const token = localStorage.getItem('jwt')
+
+    if (token) {
+      this.isLogin = true
+    }
+
   }
+
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 1. nav bar -->    
-    <navbar></navbar>
+    <navbar @login="isLogin=true" :isLogin="isLogin"></navbar>
     <!-- 2. main  -->
     <Main></Main>
     <!-- <div id="nav">

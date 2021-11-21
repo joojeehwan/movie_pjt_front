@@ -4,18 +4,11 @@
     <p>"{{ $route.params.searchKeyword }}"에 대한 검색 결과입니다.</p>
 
     <div       
-      class="row row-cols-1 row-cols-md-5 gy-3 container">
+      class="row row-cols-1 row-cols-md-5 gy-3 container" v-if="searchMovieList.length >= 1">
       <MovieCard data-app v-for="(movie, idx) in searchMovieList" :movie="movie" :key="idx">
       </MovieCard>
-
-      <!-- <MovieCard
-        data-app
-        v-for="(movie, idx) in searchMovieList"
-        :key="idx"
-        :movie="movie"        
-      /> -->
     </div>
-    <div id="result" class="row mt-5" >
+    <div id="result" class="row mt-5" v-else >
       <h2>검색 결과를 찾을 수 없습니다.</h2>
     </div>
 
@@ -25,8 +18,6 @@
 <script>
 import axios from 'axios'
 import MovieCard from '@/components/MovieCard'
-
-///movies/searchBarMovies/<movie_query>
 
 export default {
   name: 'Search',
