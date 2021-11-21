@@ -2,7 +2,7 @@
   <div id="signup">
     <h1>Signup</h1>
     <div class="p-5">
-      <img src="@/assets/movie_icon.png" alt="" style="width: 200px; heigth:200px;">    
+      <img src="@/assets/movie-icon.png" alt="" style="width: 200px; heigth:200px;">    
     </div>
 
     <div class="mt-10">
