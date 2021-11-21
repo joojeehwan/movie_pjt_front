@@ -44,11 +44,11 @@ export default {
       inputValue: null,
     }
   },
-  props: {
-     isLogin: {
-      type: Boolean, 
-    }
-  },
+  // props: {
+  //    isLogin: {
+  //     type: Boolean, 
+  //   }
+  // },
   methods: {
     searchKeyword: function (inputValue) {
       console.log(inputValue)

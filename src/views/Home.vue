@@ -4,7 +4,6 @@
  <div class="img d-flex justify-content-center">
      <carousel-3d
      :height="390"
-     :clickable= true
       :width='250'
       ref="treeExplorer"
       :space="400"
@@ -13,7 +12,7 @@
       :border="0"
      >
     <slide class="carousel-3d-item" v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">
-      <div  style="cursor:pointer;">
+      <div>
       <figcaption>
       <img :src="img_path + movie.poster_path" style="height: 100%;">
       <p class="text-center font-weight-bold align-bottom">{{movie.title}}</p>
@@ -22,7 +21,6 @@
       </div>
     </slide>
   </carousel-3d>
-  
  </div>
  <h1>#평점이 높은</h1>
   <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
@@ -56,11 +54,36 @@
     -->
       <!-- 2. 해쉬태그 순  -->
     <hr>
-    <div class="container">
-      <h3 style="text-align: left"> {{nameHashTag}}(과) 관련된 영화들</h3>
+     <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
+        <MovieCard
+        data-app
+          v-for="(movie, idx) in weeklyBoxOfficeMovieList"
+          :key="idx"
+          :movie="movie"/>
+    </div>
+
+    <h3 style="text-align: left"> #{{nameHashTag1}}(과) 관련된 영화들</h3>
+    <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
+         <MovieCard
+        data-app
+          v-for="(movie, idx) in HashtagMovieList1"
+          :key="idx"
+          :movie="movie"/>
+    </div>
+    <h3 style="text-align: left"> #{{nameHashTag2}}(과) 관련된 영화들</h3>
+    <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
+         <MovieCard
+        data-app
+          v-for="(movie, idx) in HashtagMovieList2"
+          :key="idx"
+          :movie="movie"/>
+    </div>
+
+    <!-- <div class="container">
+      <h3 style="text-align: left"> #{{nameHashTag2}}(과) 관련된 영화들</h3>
       <div class="row g-4">
         <div class="col-2 card"
-          v-for="movie in HashtagMovieList"
+          v-for="movie in HashtagMovieList2"
           :key="movie.rank">
             <img :src="movie.poster_path" alt="" class="card-img-top">           
             <div class="card-body">
@@ -69,12 +92,8 @@
             </div>
           
         </div>
-      </div>
-
-
-      <h3 style="text-align: left">#겨울와(과) 관련된 영화들</h3>    
-
-    </div>
+      </div> 
+    </div> -->
     
   </div>
 </template>
@@ -93,9 +112,13 @@ export default {
   name: 'Home',
   data: function () {
     return {
-      nameHashTag: "",
+      nameHashTag1: "",
+      nameHashTag2: "",
+
       weeklyBoxOfficeMovieList: [],
-      HashtagMovieList:[],
+      HashtagMovieList1:[],
+      HashtagMovieList2:[],
+
       img_path : "https://image.tmdb.org/t/p/w300/"
     }
   },
@@ -164,19 +187,33 @@ export default {
         console.log(err)
       })
       
-    //   axios({
-    //     method: "get", 
-    //     url: URL + "movies/searchHashtagMovies/1/"
-    //   })
-    //   .then(res =>{
-    //   console.log(res.data)
-    //    this.HashtagMovieList = res.data["movies"]
-    //    this.nameHashTag = res.data["hashtag"]
+      axios({
+        method: "get", 
+        url: URL + "movies/searchHashtagMovies/1/"
+      })
+      .then(res =>{
+      console.log(res.data)
+       this.HashtagMovieList1 = res.data["movies"]
+       this.nameHashTag1 = res.data["hashtag"]
         
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
+      })
+      .catch(err => {
+        console.log(err)
+      }),
+      axios({
+        method: "get", 
+        url: URL + "movies/searchHashtagMovies/2/"
+      })
+      .then(res =>{
+      console.log(res.data)
+       this.HashtagMovieList2 = res.data["movies"]
+       this.nameHashTag2 = res.data["hashtag"]
+        
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
   }
 }
 </script>
