@@ -8,12 +8,12 @@
               <li><img src="@/assets/logo.png" alt="logo" style="width: 20px"></li>
               <li><router-link to="/" class="nav-link px-2 text-white">Home</router-link></li>
               <li><router-link :to="{ name: 'Index'}" class="nav-link px-2 text-white">Community</router-link></li>
-              <span v-if="isLogin">
-                <li><router-link :to="{ name: 'Login'}"  class="nav-link px-2 text-white">Login</router-link></li>              
-              </span>
-              <span v-else>
+              <ul v-if="isLogin">
                   <li><router-link @click.native="logout" to="#" class="nav-link px-2 text-white">Logout</router-link></li>              
-              </span>
+              </ul>
+              <ul v-else>
+                <li><router-link :to="{ name: 'Login'}"  class="nav-link px-2 text-white">Login</router-link></li>              
+              </ul>
               
 
             </ul>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import {mapActions, mapState} from 'vuex'
 export default {
   name: 'Navbar',
   data: function () {
@@ -57,19 +58,33 @@ export default {
       }
       this.inputValue = ''
     }, 
-    logout: function () {
-      this.isLogin = false
-      localStorage.removeItem('jwt')
-      this.$router.push({ name: 'Login' })
+    logout() {
+      this.$store.dispatch("logout")
+    }, 
+    getToken() {
+      const token = localStorage.getItem("jwt")
+      return token
+      },
+    
+    setToken() {
+     const token = localStorage.getItem("jwt")
+     const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
     }
+
   },
-    created: function () {
-    const token = localStorage.getItem('jwt')
-
-    if (token) {
-      this.isLogin = true
-    }
-
+   computed: {
+    ...mapActions([
+      'checkLogin'
+    ]),
+    ...mapState([
+      'isLogin'
+    ])
+  },
+  created() {
+    this.$store.dispatch('checkLogin', this.getToken())
   }
 
 }
@@ -77,4 +92,8 @@ export default {
 
 <style>
 
+ul{
+   list-style:none;
+   padding-left:30px;
+   }
 </style>

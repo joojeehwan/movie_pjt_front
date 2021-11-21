@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -55,25 +55,29 @@ export default {
     }
   },
   methods: {
-    login: function () {
-      axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/api-token-auth/',
-        data: this.credentials
-      })
-        .then(res => {
-          console.log(res)
-          localStorage.setItem('jwt', res.data.token)
-          this.$router.push({ name: 'Home' })
-          this.$emit('login')
+    
+      login() {
+        this.$store.dispatch("login", this.credentials)
+      },
+    // login: function () {
+    //   axios({
+    //     method: 'post',
+    //     url: 'http://127.0.0.1:8000/accounts/api-token-auth/',
+    //     data: this.credentials
+    //   })
+    //     .then(res => {
+    //       console.log(res)
+    //       localStorage.setItem('jwt', res.data.token)
+    //       this.$router.push({ name: 'Home' })
+    //       this.$emit('login')
 
 
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
       
-    },
+    // },
     signup: function () {
       this.$router.push({ name: 'Signup' })
     }

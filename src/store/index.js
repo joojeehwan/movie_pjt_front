@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-//import router from '@/router'
+import router from '@/router'
 
 const SERVER_URL = 'http://127.0.0.1:8000/'
 
@@ -9,6 +9,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    //accounts
+    isLogin:false,
     //weeklyBoxOfficeMovieList: [],
     weeklyBoxOfficeMovieList: [],
     // movies
@@ -55,8 +57,14 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    //accounts
 
-
+    LOGIN(state) {
+      state.isLogin = true
+    }, 
+    LOGOUT(state) {
+      state.isLogin = false
+    },
     //GET_WEEKLY_BOX_OFFICE_MOVIE_LIST
 
     GET_WEEKLY_BOX_OFFICE_MOVIE_LIST(state, res) {
@@ -128,6 +136,33 @@ export default new Vuex.Store({
    
   },
   actions: {
+    // login_logout
+    login({commit}, credentials) {
+      axios({
+        method: "POST", 
+        url: `${SERVER_URL}accounts/api-token-auth/`,
+        data: credentials
+      })
+      .then(res => {
+        localStorage.setItem('jwt', res.data.token)
+        commit('LOGIN')
+        router.push({ name: 'Home' })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+    checkLogin({commit}, token) {
+      if (token) {
+        commit('LOGIN')
+      }
+    },
+    logout({commit}) {
+      localStorage.removeItem('jwt')
+      commit('LOGOUT')
+       router.push({ name: 'Login' })
+    },
+
     //getWeeklyBoxOfficeMovieList
     getWeeklyBoxOfficeMovieList({commit}, token) {
       axios({
