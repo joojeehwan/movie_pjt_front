@@ -24,9 +24,9 @@
       <CommentList :review="review"/>
     </v-expansion-panel-content>
     <v-expansion-panel-content>
-      <div class="buttons">
-        <button class="btn btn-modify" @click="updateReview">리뷰 수정</button>
-        <button class="btn btn-delete" @click="deleteReview">리뷰 삭제</button>
+      <div>
+        <button class="btn-modify" @click="updateReview">리뷰 수정</button>
+        <button class="btn-delete" @click="deleteReview">리뷰 삭제</button>
       </div>
     </v-expansion-panel-content>
 
@@ -110,5 +110,20 @@ name:"CommunityHomeItem",
 </script>
 
 <style>
+
+
+.btn-modify {
+  font-weight: bold;
+  background-color: #564d4d;
+  color: white;
+  margin-right: 5px;
+}
+
+.btn-delete {
+  font-weight: bold;
+  background-color: #831010;
+  color: white;
+  margin-left: 5px;
+}
 
 </style>

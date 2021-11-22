@@ -122,4 +122,14 @@ textarea {
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px #999;
 }
+
+.input-box {
+  width: 280px;
+  border-bottom: solid 1px white;
+  margin-right: 10px;
+}
+
+.v-expansion-panel input, textarea{
+  color: white;
+}
 </style>

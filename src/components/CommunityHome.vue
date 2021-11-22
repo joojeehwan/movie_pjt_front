@@ -62,4 +62,11 @@ export default {
 
 <style>
 
+.v-expansion-panel input, textarea{
+  color: white;
+}
+
+.review-list-inset {
+  padding-top: 2rem;
+}
 </style>
