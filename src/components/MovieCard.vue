@@ -43,19 +43,19 @@
                       개봉  :  {{ movieDetailInformation.release_date }}
                     </div>
                     <div
-                      v-if="movieDetailInformation.genres_list">
-                        장르 : {{movieDetailInformation.genres_list}}
+                      v-for="(genre, idx) in movieDetailInformation.genres_list"
+                      :key=idx
+                      >
+                        {{genre}}
                     </div>
                   </div>
                   <div class="movie-detail-info-header-right">
                    <div class="movie-vote">
                     평점 : {{ movieDetailInformation.vote_average }}
                    </div>
-                   <!-- <div class="movie-actors"
-                   v-for="(actor, idx) in movieDetailInformation.actors_list"
-                   :key=idx>
-                    {{actor}}
-                   </div> -->
+                   <div class="movie-actors">
+                    {{getActorList()}}
+                   </div>
                   </div>
                 </div>
                  <!-- info overview -->
@@ -101,6 +101,8 @@ export default {
       sound: true,
       widgets: false,
 
+      actor: [],
+
       //상세정보
       movieDetailInformation: []
     }
@@ -112,9 +114,8 @@ export default {
   },
   methods: {
     getActorList: function () {
-     const actors =  this.movieDetailInformation.actors_list
-      
-      return typeof(actors)
+     this.actor =  this.movieDetailInformation.actors_list
+
 
     },
     callAxios: function() {
