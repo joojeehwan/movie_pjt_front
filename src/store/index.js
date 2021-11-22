@@ -116,6 +116,7 @@ export default new Vuex.Store({
     READ_COMMENT(state, res) {
       state.comment = res
     },
+
     UPDATE_COMMENT(state, commentItem) {
       state.comments = state.comments.map((comment) => {
         if (comment === commentItem) {
@@ -125,9 +126,10 @@ export default new Vuex.Store({
       })
     },
     DELETE_COMMENT(state, commentItem) {
-      const index = state.comments.indexOf(commentItem)
+     const index = state.comments.indexOf(commentItem)
       state.comments.splice(index, 1)
     },
+    
     GET_COMMENTS(state, res) {
       state.comments = res
     },
@@ -271,12 +273,6 @@ export default new Vuex.Store({
         console.log(err)
       })
     }, 
-    // readComment({commit}, objs) {
-    //   axios({
-    //     method:"GET",
-    //     url: `SERVER_URL`
-    //   })
-    // },
     createComment({commit}, objs) {
       axios({
         method: 'POST',
@@ -308,9 +304,10 @@ export default new Vuex.Store({
         headers: objs.token
       })
       .then((res) => {
+        console.log(res)
         commit('DELETE_COMMENT', res.data)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err.response))
     },
 
   },

@@ -20,7 +20,7 @@
       <div class="movie-detail-toolbar">
         <v-btn
           icon
-          primary
+          dark
           @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -29,20 +29,54 @@
         <div class="movie-detail-poster">
           <img :src="imgSrc" alt="포스터 없음">
         </div>
-
-        <v-list-item-content>
-              <v-list-item-title>{{movieDetailInformation.title}}</v-list-item-title>
-              <v-list-item-subtitle>{{movieDetailInformation.release_date}}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{movieDetailInformation.vote_average}}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{movieDetailInformation.genres_list}}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{movieDetailInformation.actors_list}}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{movieDetailInformation.overview}}</v-list-item-subtitle>              
-              <!-- <v-list-item-subtitle>{{getGenre(movie.genre_ids)}}</v-list-item-subtitle> -->
-        </v-list-item-content>
-     
+          <div class="movie-detail-info">
+              <!-- info header -->
+              <div class="movie-detail-upper">
+                <div class="movie-detail-info-header">
+                  <div class="movie-detail-info-header-left">
+                    <div class="movie-detail-title">
+                      {{ movieDetailInformation.title }}
+                    </div>
+                    <div
+                    v-if="movieDetailInformation.release_date"
+                    class="movie-release-date">
+                      개봉  :  {{ movieDetailInformation.release_date }}
+                    </div>
+                    <div
+                      v-if="movieDetailInformation.genres_list">
+                        장르 : {{movieDetailInformation.genres_list}}
+                    </div>
+                  </div>
+                  <div class="movie-detail-info-header-right">
+                   <div class="movie-vote">
+                    평점 : {{ movieDetailInformation.vote_average }}
+                   </div>
+                   <!-- <div class="movie-actors"
+                   v-for="(actor, idx) in movieDetailInformation.actors_list"
+                   :key=idx>
+                    {{actor}}
+                   </div> -->
+                  </div>
+                </div>
+                 <!-- info overview -->
+                  <div class="movie-detail-overview-header">
+                    줄거리
+                  </div>
+                  <hr>
+                  <div
+                    v-if="movieDetailInformation.overview"
+                    class="movie-detail-overview-body">
+                    {{ movieDetailInformation.overview }}
+                  </div>
+                   <div v-else
+                      class="movie-detail-overview-body">
+                      해당 영화는 줄거리가 제공되지 않습니다.
+                    </div>          
+              </div>
+          </div>
+      
       </div>
-    </div>
-          
+     </div>  
 </v-dialog>
 
 </div>
@@ -73,10 +107,16 @@ export default {
   },
   computed: {
     imgSrc: function () {
-      return this.movie.poster_path
+      return "https://image.tmdb.org/t/p/w300/" + this.movie.poster_path
     },
   },
   methods: {
+    getActorList: function () {
+     const actors =  this.movieDetailInformation.actors_list
+      
+      return typeof(actors)
+
+    },
     callAxios: function() {
       var detailTmdbID = this.movie.tmdb_id
       console.log(detailTmdbID)
@@ -102,10 +142,15 @@ export default {
 
 <style>
 
-/* .popular-list {
-  display: flex;
-  margin-left: 5rem;
-  margin-right: 5rem;
+
+
+html, body, template, #app {
+  height: 100%;
+}
+
+
+.movie-item:hover {
+  cursor: pointer;
 }
 
 .movie-item {
@@ -114,32 +159,19 @@ export default {
   flex: 1 1 0px;
   transition: transform 500ms;
 }
-*/
-
- /* .movie-item:hover {
-  cursor: pointer;
-} 
-
- .popular-list .movie-item:focus,
-.popular-list .movie-item:hover {
-  transform: scale(1.4);
-  z-index: 1;
-}
-
-.popular-list:focus-within ~ .movie-item,
-.popular-list:hover ~ .movie-item {
-  transform: translateX(-25%);
-}
 
 .movie-item:focus  .movie-item,
 .movie-item:hover  .movie-item {
   transform: translateX(25%);
-} 
+}
 
- movieCards 
+.movie-item:hover {
+  cursor: pointer;
+}
+
  #logo-image {
   height: 100%;
-}
+} 
 
 .movie-detail-card {
   font-family: 'Noto Sans KR', sans-serif;
@@ -168,7 +200,7 @@ export default {
   justify-content: space-between;
   margin: 1rem 0 0 4rem;
   width: 60%;
-}
+} 
 
 .movie-detail-info-header {
   display: flex;
@@ -182,6 +214,7 @@ export default {
 
 .movie-detail-title {
   font-size: 40px;
+  color: #dddddddd;
 }
 
 .movie-detail-info-header-right {
@@ -190,19 +223,19 @@ export default {
   align-items: center;
 }
 
-
-
 #movie-star {
   height: 50%;
   margin-left: 1rem;
-}
+} 
 
 .movie-detail-overview-header {
   margin-top: 5rem;
   font-size: 32px;
-}
+} 
 
-.movie-detail-overview-body {
+ .movie-detail-overview-body {
   font-size: 20px;
-} */ 
+  color: #dddddddd;
+  
+} 
 </style>

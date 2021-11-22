@@ -11,6 +11,7 @@
 <script>
 import CommentListItem from "@/components/CommentListItem"
 import { mapGetters } from 'vuex'
+
 export default {
   name: "CommentList", 
   props: {

@@ -114,4 +114,12 @@ export default {
 
 <style>
 
+textarea {
+  padding: 10px;
+  width: 1000px;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #999;
+}
 </style>
