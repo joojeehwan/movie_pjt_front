@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     imgSrc: function () {
-      return "https://image.tmdb.org/t/p/w300/" + this.movie.poster_path
+      return this.movie.poster_path
     },
   },
   methods: {

@@ -3,26 +3,19 @@
       <h1>Weekly Boxoffice Movies</h1>
  <div class="img d-flex justify-content-center">
      <carousel-3d
-     :height="390"
-      :width='250'
-      ref="treeExplorer"
-      :space="400"
+      :height="450"
+      :width='300'
+      :space="380"
       :count="weeklyBoxOfficeMovieList.length"
       :display="7"
       :border="0"
      >
-    <slide class="carousel-3d-item" v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">
-      <div>
-      <figcaption>
-      <img :src="img_path + movie.poster_path" style="height: 100%;">
-      <p class="text-center font-weight-bold align-bottom">{{movie.title}}</p>
-      <!-- <p>{{movie.overview}}</p> -->
-      </figcaption>
-      </div>
+    <slide  v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">
+      <img class="carousel-item-img" :src="img_path + movie.poster_path">
     </slide>
   </carousel-3d>
  </div>
- <h1>#평점이 높은</h1>
+ <h2 style="text-align: left">#평점이 높은</h2>
   <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
       <MovieCard
       data-app
@@ -54,24 +47,20 @@
     -->
       <!-- 2. 해쉬태그 순  -->
     <hr>
-     <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
-        <MovieCard
-        data-app
-          v-for="(movie, idx) in weeklyBoxOfficeMovieList"
-          :key="idx"
-          :movie="movie"/>
-    </div>
-
-    <h3 style="text-align: left"> #{{nameHashTag1}}(과) 관련된 영화들</h3>
-    <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
+    <br>
+    <h2 v-if="isLogin" style="text-align: left"> #{{nameHashTag1}}(과) 관련된 영화들</h2>
+    <div v-if="isLogin" class="popular-list row row-cols-1 row-cols-md-5 gy-3">
          <MovieCard
         data-app
           v-for="(movie, idx) in HashtagMovieList1"
           :key="idx"
           :movie="movie"/>
     </div>
-    <h3 style="text-align: left"> #{{nameHashTag2}}(과) 관련된 영화들</h3>
-    <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
+
+    <hr>
+    <br>
+    <h3 v-if="isLogin"  style="text-align: left"> #{{nameHashTag2}}(과) 관련된 영화들</h3>
+    <div v-if="isLogin" class="popular-list row row-cols-1 row-cols-md-5 gy-3">
          <MovieCard
         data-app
           v-for="(movie, idx) in HashtagMovieList2"
@@ -100,6 +89,7 @@
 
 <script>
 import { Carousel3d, Slide } from 'vue-carousel-3d';
+import {mapState} from "vuex"
 import MovieCard from '@/components/MovieCard'
 //import { mapGetters } from 'vuex'
 import axios from 'axios'
@@ -122,17 +112,13 @@ export default {
       img_path : "https://image.tmdb.org/t/p/w300/"
     }
   },
+
   components: {
     // ImgCarousel,
    Carousel3d,
     Slide,
     MovieCard
   },
-  // computed: {
-  //    ...mapGetters([
-  //     "weeklyBoxOfficeMovieList"
-  //   ])
-  // },
   methods: {
     setToken: function () {
       const token = localStorage.getItem('jwt')
@@ -144,6 +130,10 @@ export default {
     getWeeklyBoxOfficeMovieList: function() {
       this.$store.commit("getWeeklyBoxOfficeMovieList", this.setToken)
     },
+      imageLoaded() {
+                console.log('force load');
+                this.$refs.carousel.$forceUpdate()
+            },
     },
   // 화면 전환 시 로딩 오래 걸리는 것 수정
   watch: {
@@ -170,8 +160,13 @@ export default {
     // },
     
   },
-
+    computed: {
+     ...mapState([
+      'isLogin'
+    ])
+  },
   created() {
+
     //this.getWeeklyBoxOfficeMovieList()
     axios({
       method: 'get',
@@ -219,6 +214,11 @@ export default {
 </script>
 
 <style>
+
+    .carousel-item-img {
+        height:43vh!important ;
+    }
+
   .detail-area {
     position: relative;
     width: 100%;
