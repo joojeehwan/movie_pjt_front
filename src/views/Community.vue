@@ -14,7 +14,7 @@ import CommunityHome from '@/components/CommunityHome'
 import CommunityForm from "@/components/CommunityForm"
 
 export default {
-  name: 'Index',
+  name: 'Community',
   components: {
     CommunityHome,
     CommunityForm,

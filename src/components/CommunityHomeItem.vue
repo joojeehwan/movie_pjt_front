@@ -17,7 +17,7 @@
     <v-expansion-panel-content>
       <textarea name="reviewContent" cols="30" rows="10" v-model="reviewItem.content" placeholder="내용">
       </textarea>
-      </v-expansion-panel-content>
+    </v-expansion-panel-content>
     <v-expansion-panel-content>
       <h3>Comments</h3>
       <CommentForm :review="review"/>
@@ -55,14 +55,19 @@ name:"CommunityHomeItem",
       },
     }
   },
+   props: {
+     review: {
+      type: Object,
+      required: true,
+    }
+  },
   methods: {
-    callAxiosDetailReview: function (reive_pk) {
+    callAxiosDetailReview: function (review_pk) {
         axios({
-          method: "get", 
-          url: `http://127.0.0.1:8000/community/${reive_pk}`,
+          method: "GET", 
+          url: `http://127.0.0.1:8000/community/${review_pk}`,
         })
         .then(res=> {
-          console.log(res)
           this.reviewItem.movie_title = res.data.movie_title
           this.reviewItem.title = res.data.title
           this.reviewItem.content = res.data.content
@@ -80,7 +85,7 @@ name:"CommunityHomeItem",
       return config
     }, 
       updateReview() {
-        console.log("이거 누르면 update")
+
       const reviewItemSet = {
         reviewItem: this.reviewItem,
         review_id: this.review.id,
@@ -94,14 +99,6 @@ name:"CommunityHomeItem",
         token: this.setToken()
       }
       this.$store.dispatch('deleteReview', reviewItemSet)
-    }
-  },
-  props: {
-     review: {
-      type: Object,
-      default() {
-        return []
-      }
     }
   },
    created() {

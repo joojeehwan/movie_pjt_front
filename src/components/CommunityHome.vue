@@ -1,6 +1,5 @@
 <template>
  <v-row class="review-list-inset">
-   <!-- {{reviews}} -->
     <v-expansion-panels inset dark>
       <v-expansion-panel
         v-for="(review, idx) in reviews"
@@ -8,8 +7,8 @@
       >
       <CommunityHomeItem
         :review="review"
-      >
-      </CommunityHomeItem>
+      />
+     
       </v-expansion-panel>
     </v-expansion-panels>
   </v-row>

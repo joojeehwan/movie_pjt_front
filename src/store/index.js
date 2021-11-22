@@ -93,7 +93,7 @@ export default new Vuex.Store({
       state.reviews = res
     },
     CREATE_REVIEW(state, res) {
-      state.reviews = res
+      state.reviews.push(res)
     },
     UPDATE_REVIEW(state, reviewItem) {
       state.reviews = state.reviews.map((review) => {
@@ -101,7 +101,6 @@ export default new Vuex.Store({
           return { ...review,
             title: reviewItem.title,
             content: reviewItem.content,
-            rank: reviewItem.rank,
           }
         }
         return review
@@ -109,7 +108,6 @@ export default new Vuex.Store({
     },
     DELETE_REVIEW(state, reviewItem) {
       const index = state.reviews.indexOf(reviewItem)
-
       state.reviews.splice(index, 1)
     },
     CREATE_COMMENT(state, res) {
@@ -166,7 +164,7 @@ export default new Vuex.Store({
     //getWeeklyBoxOfficeMovieList
     getWeeklyBoxOfficeMovieList({commit}, token) {
       axios({
-        method: 'get',
+        method: 'GET',
         url: SERVER_URL+'movies/searchWeeklyBoxOfficeMovies',
         headers: token
         // params
@@ -209,7 +207,7 @@ export default new Vuex.Store({
       .catch(err => console.log(err))
     },
     // COMMUNITY - REVIEW ACTIONS
-    getReviews({commit},token) {
+    getReviews({commit}, token) {
       axios({
         method: 'GET',
         url: `${SERVER_URL}community/`,
@@ -230,8 +228,8 @@ export default new Vuex.Store({
       })
       .then(() => {
         commit('CREATE_REVIEW')
-        // router.push({name: 'Community'})
-        // router.go()
+        router.push({name: 'Index'})
+        router.go()
       })
       .catch(err => console.log(err))
     },
@@ -243,7 +241,6 @@ export default new Vuex.Store({
         headers: objs.token
       })
       .then(() => {
-        console.log("업데이트 성공")
         commit('UPDATE_REVIEW')
       })
       .catch(err => console.log(err))
@@ -255,9 +252,8 @@ export default new Vuex.Store({
         headers: objs.token
       })
       .then(() => {
-        console.log("삭제 성공")
         commit('DELETE_REVIEW')
-       //router.go()
+        router.go()
       })
       .catch(err => console.log(err))
     },
@@ -272,9 +268,15 @@ export default new Vuex.Store({
         commit("GET_COMMENTS", res.data)
       })
       .catch(err=> {
-        console.lot(err)
+        console.log(err)
       })
     }, 
+    // readComment({commit}, objs) {
+    //   axios({
+    //     method:"GET",
+    //     url: `SERVER_URL`
+    //   })
+    // },
     createComment({commit}, objs) {
       axios({
         method: 'POST',
@@ -290,7 +292,7 @@ export default new Vuex.Store({
     updateComment({commit}, objs) {
       axios({
         method: 'PUT',
-        url: `${SERVER_URL}community/${objs.comment_id}/comments/detail`,
+        url: `${SERVER_URL}community/${objs.comment_id}/comments/detail/`,
         data: objs.commentItem,
         headers: objs.token
       })
