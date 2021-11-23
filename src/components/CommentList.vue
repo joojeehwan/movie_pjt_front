@@ -32,6 +32,11 @@ export default {
       return config
     },
   }, 
+  filters: {
+    reverse: function(value) {
+      return value.slice().reverse()
+    }
+  },
   computed: {
      ...mapGetters([
       'comments'

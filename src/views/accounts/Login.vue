@@ -58,6 +58,7 @@ export default {
     
       login() {
         this.$store.dispatch("login", this.credentials)
+        this.$store.dispatch("userName", this.credentials.username)
       },
     // login: function () {
     //   axios({

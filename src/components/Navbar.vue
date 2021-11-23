@@ -7,11 +7,13 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li><img src="@/assets/logo.png" alt="logo" style="width: 20px"></li>
               <li><router-link to="/" class="nav-link px-2 text-white">Home</router-link></li>
-              <li><router-link :to="{ name: 'Index'}" class="nav-link px-2 text-white">Community</router-link></li>
-              <ul v-if="isLogin">
+              <ul style= "-webkit-padding-start:0px" v-if="isLogin">
+                  <li><router-link :to="{ name: 'Index'}" class="nav-link px-2 text-white">Community</router-link></li>
                   <li><router-link @click.native="logout" to="#" class="nav-link px-2 text-white">Logout</router-link></li>              
               </ul>
-              <ul v-else>
+              <ul style= "-webkit-padding-start:0px" v-else>
+                <!-- 로그아웃 했을 경우 -->
+                <!-- <li><router-link :to="{ name: 'Login'}" class="nav-link px-2 text-white">Community</router-link></li> -->
                 <li><router-link :to="{ name: 'Login'}"  class="nav-link px-2 text-white">Login</router-link></li>              
               </ul>
               
@@ -94,6 +96,16 @@ export default {
 
 ul{
    list-style:none;
-   padding-left:30px;
+    margin:0;
+    padding:0;
+
    }
+
+  li{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border : 0;
+    float: left;
+  }
+
 </style>

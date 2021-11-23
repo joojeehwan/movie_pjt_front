@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '@/router'
+import swal from 'sweetalert'
+
 
 const SERVER_URL = 'http://127.0.0.1:8000/'
 
@@ -11,6 +13,8 @@ export default new Vuex.Store({
   state: {
     //accounts
     isLogin:false,
+    //userName
+    user_names: [],
     //weeklyBoxOfficeMovieList: [],
     weeklyBoxOfficeMovieList: [],
     // movies
@@ -133,17 +137,26 @@ export default new Vuex.Store({
     GET_COMMENTS(state, res) {
       state.comments = res
     },
+    USER_NAME(state, res) {
+      state.user_names = res
+    }
    
   },
   actions: {
+    //user_Name
+    userName({commit}, useranme) {
+      commit("USER_NAME",useranme )
+    },
     // login_logout
     login({commit}, credentials) {
+      commit("USER_NAME",credentials.username)
       axios({
         method: "POST", 
         url: `${SERVER_URL}accounts/api-token-auth/`,
         data: credentials
       })
       .then(res => {
+        console.log(res)
         localStorage.setItem('jwt', res.data.token)
         commit('LOGIN')
         router.push({ name: 'Home' })
@@ -196,18 +209,7 @@ export default new Vuex.Store({
       })
       .catch(err => console.log(err))
     },
-    getGenres({commit}, token) {
-      axios({
-        method: 'GET',
-        url: `${SERVER_URL}movies/genres/`,
-        headers: token
-      })
-      .then((res) => {
 
-        commit('GET_GENRES', res.data)
-      })
-      .catch(err => console.log(err))
-    },
     // COMMUNITY - REVIEW ACTIONS
     getReviews({commit}, token) {
       axios({
@@ -228,7 +230,8 @@ export default new Vuex.Store({
         data: objs.reviewItem,
         headers: objs.token
       })
-      .then(() => {
+      .then((res) => {
+        console.log(res)
         commit('CREATE_REVIEW')
         router.push({name: 'Index'})
         router.go()
@@ -245,7 +248,10 @@ export default new Vuex.Store({
       .then(() => {
         commit('UPDATE_REVIEW')
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+        swal("타인이 작성한 리뷰는 수정할 수 없습니다.")
+      })
     },
     deleteReview({commit}, objs) {
       axios({
@@ -257,7 +263,10 @@ export default new Vuex.Store({
         commit('DELETE_REVIEW')
         router.go()
       })
-      .catch(err => console.log(err))
+      .catch(err=>{
+        console.log(err)
+        swal("타인이 작성한 리뷰은 지울 수 없습니다.")
+      })
     },
     //Commuity - COMMENT ACTTONS
     getComments({commit}, objs) {
@@ -297,7 +306,10 @@ export default new Vuex.Store({
       .then((res) => {
         commit('UPDATE_COMMENT', res.data)
       })
-      .catch(err => console.log(err))
+      .catch(err => 
+        {console.log(err)
+        swal("타인이 작성한 댓글은 수정 할 수 없습니다.")
+      })
     },
     deleteComment({commit}, objs) {
       axios({
@@ -307,9 +319,13 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(res)
+        
         commit('DELETE_COMMENT', res.data)
       })
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        console.log(err.response)
+        swal("타인이 작성한 댓글은 지울 수 없습니다.")
+      })
     },
 
   },

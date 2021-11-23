@@ -1,13 +1,16 @@
 <template>
    <div>
 
-    
+       {{this.$store.state.user_names}}
+      1234
       <v-expansion-panel-header
        @click="callAxiosDetailReview(review.id)"
        >
-       {{review.movie_title}} |
-       {{review.title}} |
-       {{review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}    
+       영화제목 : {{review.movie_title}} ||
+       작성일 : {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} ||
+       리뷰제목 : {{review.title}} ||
+       조회수 : {{review.click}}
+       
         </v-expansion-panel-header>
 
     <v-expansion-panel-content>
@@ -70,6 +73,7 @@ name:"CommunityHomeItem",
           url: `http://127.0.0.1:8000/community/${review_pk}`,
         })
         .then(res=> {
+          console.log(res)
           this.reviewItem.movie_title = res.data.movie_title
           this.reviewItem.title = res.data.title
           this.reviewItem.content = res.data.content
@@ -128,4 +132,7 @@ name:"CommunityHomeItem",
   margin-left: 5px;
 }
 
+.v-expansion-panel input, textarea{
+  color: white;
+}
 </style>

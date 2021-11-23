@@ -10,6 +10,7 @@ import vueMoment from 'vue-moment'
 
 
 
+
 // fontawesome사용하기
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'

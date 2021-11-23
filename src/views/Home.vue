@@ -1,5 +1,8 @@
 <template>
+
   <div class="home">    
+    1234
+    {{this.$store.username}}
       <h1>Weekly Boxoffice Movies</h1>
  <div class="img d-flex justify-content-center">
      <carousel-3d

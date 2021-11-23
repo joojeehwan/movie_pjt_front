@@ -34,7 +34,9 @@
               <div class="movie-detail-upper">
                 <div class="movie-detail-info-header">
                   <div class="movie-detail-info-header-left">
-                    <div class="movie-detail-title">
+                    <div class="movie-detail-title"
+                    style="font-weight:bold"
+                    >
                       {{ movieDetailInformation.title }}
                     </div>
                     <div
@@ -48,14 +50,20 @@
                       >
                         {{genre}}
                     </div>
+                   <div class="movie-actors"
+                   v-if="movieDetailInformation.actors_list">
+                    {{ movieDetailInformation.actors_list[0]}} , {{ movieDetailInformation.actors_list[1]}}
+                   </div>
                   </div>
                   <div class="movie-detail-info-header-right">
+                    <div class="container justify-content-end">
                    <div class="movie-vote">
-                    평점 : {{ movieDetailInformation.vote_average }}
+                    평점 : {{ movieDetailInformation.vote_average }} 
                    </div>
-                   <div class="movie-actors">
-                    {{movieDetailInformation.actors_list}}
+                   <div class="movie-vote">
+                     / 감독 : {{ movieDetailInformation.director }}
                    </div>
+                    </div>
                   </div>
                 </div>
                  <!-- info overview -->

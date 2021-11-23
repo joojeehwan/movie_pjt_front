@@ -1,7 +1,7 @@
 <template>
   <div>
     <input type="text" class="input-box" placeholder="댓글 내용" v-model="commentItem.content">
-    <button class="btn btn-create" @click="createComment">댓글 작성</button>
+    <button class="btn-create" @click="createComment">댓글 작성</button>
   </div>
 </template>
 
