@@ -32,14 +32,30 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-textarea
-                  solo
-                  label="*내용"
-                  v-model.trim="reviewItem.content"
-                  required
-                ></v-textarea>
+               <v-col cols="6">
+                <v-rating
+                  v-model="reviewItem.rank"
+                  color="yellow"
+                  background-color="grey darken-1"
+                  empty-icon="$ratingFull"
+                  half-increments
+                  hover
+                  large
+                ></v-rating>
               </v-col>
+              <v-col cols="6">
+                <span class="grey--text text--lighten-2 caption mr-2">
+                  ({{ reviewItem.rank }})
+                </span>
+                </v-col>
+                <v-col cols="12">
+                  <v-textarea
+                    solo
+                    label="*내용"
+                    v-model.trim="reviewItem.content"
+                    required
+                  ></v-textarea>
+                </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -75,6 +91,7 @@ export default {
         movie_title: null,
         title: null,
         content: null,
+        rank: 3
       },
         dialog: false,
     }  

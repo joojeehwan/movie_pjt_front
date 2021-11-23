@@ -1,15 +1,15 @@
 <template>
    <div>
 
-       {{this.$store.state.user_names}}
-      1234
+     
       <v-expansion-panel-header
-       @click="callAxiosDetailReview(review.id)"
+       @click="[callAxiosDetailReview(review.id),clickviews()]"
+       v-model="count"
        >
        영화제목 : {{review.movie_title}} ||
        작성일 : {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} ||
        리뷰제목 : {{review.title}} ||
-       조회수 : {{review.click}}
+       조회수 : {{count}}
        
         </v-expansion-panel-header>
 
@@ -19,6 +19,9 @@
     <v-expansion-panel-content>
       제목 : {{reviewItem.title}}
       </v-expansion-panel-content>
+    <v-expansion-panel-content>
+      평점 : {{reviewItem.rank}}
+    </v-expansion-panel-content>
     <v-expansion-panel-content>
       <textarea name="reviewContent" cols="30" rows="10" v-model="reviewItem.content" placeholder="내용">
       </textarea>
@@ -56,8 +59,10 @@ name:"CommunityHomeItem",
         movie_title: this.review.movie_title,
         title: this.review.title,
         content: this.review.content,
+        rank: this.review.rank
 
       },
+      count: this.review.click
     }
   },
    props: {
@@ -67,6 +72,10 @@ name:"CommunityHomeItem",
     }
   },
   methods: {
+    clickviews: function() {
+        this.count = this.review.click
+        this.count += 1
+    },
     callAxiosDetailReview: function (review_pk) {
         axios({
           method: "GET", 
@@ -77,6 +86,7 @@ name:"CommunityHomeItem",
           this.reviewItem.movie_title = res.data.movie_title
           this.reviewItem.title = res.data.title
           this.reviewItem.content = res.data.content
+          this.reviewItem.rank = res.data.rank
         })
         .catch(err =>{
           console.log(err)

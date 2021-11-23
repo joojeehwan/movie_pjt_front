@@ -35,27 +35,33 @@
               <div class="movie-detail-upper">
                 <div class="movie-detail-info-header">
                   <div class="movie-detail-info-header-left">
+
                     <div class="movie-detail-title"
                     style="font-weight:bold"
                     >
-                      {{ movieDetailInformation.title }}
+                      <div>{{movieDetailInformation.title }}</div>
+
+                      
                     </div>
-                    <div
-                    v-if="movieDetailInformation.release_date"
-                    class="movie-release-date">
-                      개봉  :  {{ movieDetailInformation.release_date }}
-                    </div>
-                    <div
-                      v-for="(genre, idx) in movieDetailInformation.genres_list"
-                      :key=idx
-                      >
-                        {{genre}}
-                    </div>
-                   <div class="movie-actors"
-                   v-if="movieDetailInformation.actors_list">
-                    {{ movieDetailInformation.actors_list[0]}} , {{ movieDetailInformation.actors_list[1]}}
-                   </div>
+
                   </div>
+                      <div >
+
+                        <div
+                        v-if="movieDetailInformation.release_date"
+                        class="movie-release-date"
+                          >
+                          개봉  :  {{ movieDetailInformation.release_date }}
+                        </div>
+                        <div class="movie-genres" 
+                        v-if="movieDetailInformation.genres_list">
+                            {{ movieDetailInformation.genres_list[0]}} , {{ movieDetailInformation.genres_list[1]}}
+                        </div>
+                        <div class="movie-actors"
+                        v-if="movieDetailInformation.actors_list">
+                          {{ movieDetailInformation.actors_list[0]}} , {{ movieDetailInformation.actors_list[1]}}
+                          </div>
+                    </div>
                   <div class="movie-detail-info-header-right">
                     <div class="container justify-content-end">
                    <div class="movie-vote">
@@ -236,6 +242,8 @@ export default {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  flex-direction:column;
+  
 }
 
 .movie-detail-info-header-right {
