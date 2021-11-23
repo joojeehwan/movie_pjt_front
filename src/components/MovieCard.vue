@@ -1,22 +1,23 @@
 <template>
 <div class= "col-mb-6 movie-item">
-
-  <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-    >
+  <v-dialog      
+    v-model="dialog"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"      
+  >
     <template v-slot:activator="{ on, attrs }">
-    <v-img
+      <v-img        
+        style="height:330px; width:220px; object-fit:cover"
         :src="imgSrc" alt="포스터 없음"
         v-bind="attrs"
         v-on="on"
         @click="callAxios"
       >
-    </v-img>
-  </template>
-     <div class="movie-detail-card">
+      </v-img>
+    </template>
+
+    <div class="movie-detail-card">
       <div class="movie-detail-toolbar">
         <v-btn
           icon
@@ -117,7 +118,7 @@ export default {
   },
   computed: {
     imgSrc: function () {
-      return "https://image.tmdb.org/t/p/w300/" + this.movie.poster_path
+      return this.movie.poster_path
     },
   },
   methods: {
@@ -148,13 +149,10 @@ export default {
 
 </script>
 
-<style>
-
-
-
-html, body, template, #app {
-  height: 100%;
-}
+<style scoped>
+/* html, body, template, #app {
+  height: 100%;  
+} */
 
 
 .movie-item:hover {
@@ -162,7 +160,9 @@ html, body, template, #app {
 }
 
 .movie-item {
-  position: relative;
+  /* 잠깐만 테스트 */  
+  /* position: relative; */
+  
   display: block;
   flex: 1 1 0px;
   transition: transform 500ms;
@@ -170,11 +170,8 @@ html, body, template, #app {
 
 .movie-item:focus  .movie-item,
 .movie-item:hover  .movie-item {
-  transform: translateX(25%);
-}
-
-.movie-item:hover {
-  cursor: pointer;
+  /* 잠깐만 테스트 */  
+  /* transform: translateX(25%); */
 }
 
  #logo-image {
@@ -189,11 +186,19 @@ html, body, template, #app {
   padding: 2rem;
   min-height: 100%;
   height: auto;
-  background-color: #000000;
+  /* 잠깐만 테스트 */  
+  /* background-color: #000000;   */
+  background-color: black;  
+  
+  /* position: absolute;   */
+  
 }
 
 .movie-detail-toolbar {
-  height: 56px;
+  position: fixed;      
+  top: 55px;
+  left: 50%;
+  /* height: 50px; */
 }
 
 .movie-detail-body {
@@ -207,7 +212,7 @@ html, body, template, #app {
   flex-flow: column wrap;
   justify-content: space-between;
   margin: 1rem 0 0 4rem;
-  width: 60%;
+  width: 60%;  
 } 
 
 .movie-detail-info-header {
@@ -217,12 +222,20 @@ html, body, template, #app {
   height: 80px;
 }
 .movie-detail-poster > img {
-  width: 500px;
+  /* width: 500px; */
+  width: 100%;
+  opacity: 1;
 }
 
 .movie-detail-title {
   font-size: 40px;
   color: #dddddddd;
+}
+
+.movie-detail-info-header-left {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
 }
 
 .movie-detail-info-header-right {
@@ -243,7 +256,7 @@ html, body, template, #app {
 
  .movie-detail-overview-body {
   font-size: 20px;
-  color: #dddddddd;
-  
-} 
+  color: #dddddddd;  
+  }  
+
 </style>

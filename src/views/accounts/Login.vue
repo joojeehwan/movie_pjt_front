@@ -1,8 +1,8 @@
 <template>
-  <div id="login"> 
-    <h1>Login</h1>   
+  <div id="login">     
+    <p class="text-white fw-bold fst-italic text-center fs-2"># Login</p>  
     <div class="p-5">
-      <img src="@/assets/movie-icon.png" alt="" style="width: 200px; heigth:200px;">    
+      <img src="@/assets/movie-icon.png" alt="" style="width: 150px; heigth:150px;">    
     </div>
 
     <div class="mt-10">
@@ -28,13 +28,17 @@
 
       <div class="d-flex justify-content-center input-group p-3">        
         <button
-          class="btn btn-outline-dark"
-          @click="login">로그인</button>
+          class="btn btn-outline-light"
+          style="width: 120px;"
+          @click="login">Log In</button>
       </div>
       <div class="d-flex input-group">
+        <div class="ms-auto text-secondary">
+          Not a member yet?
         <button 
-          class="btn btn-link ms-auto"          
-          @click="signup">회원가입</button>
+          class="btn btn-link"          
+          @click="signup">Sign up now</button>
+        </div>        
       </div>
     </div>
     

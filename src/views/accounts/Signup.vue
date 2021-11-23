@@ -1,8 +1,8 @@
 <template>
-  <div id="signup">
-    <h1>Signup</h1>
+  <div id="signup">    
+    <p class="text-white fw-bold fst-italic text-center fs-2"># Signup</p>  
     <div class="p-5">
-      <img src="@/assets/movie-icon.png" alt="" style="width: 200px; heigth:200px;">    
+      <img src="@/assets/movie-icon.png" alt="" style="width: 150px; heigth:150px;">    
     </div>
 
     <div class="mt-10">
@@ -38,8 +38,9 @@
 
       <div class="d-flex justify-content-center input-group p-3">        
         <button
-          class="btn btn-outline-dark"
-          @click="signup">회원가입</button>
+          class="btn btn-outline-light"
+          style="width: 120px;"
+          @click="signup">Sign Up</button>
       </div>      
     </div>
     

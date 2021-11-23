@@ -1,97 +1,115 @@
 <template>
-
-  <div class="home">    
-    1234
-    {{this.$store.username}}
-      <h1>Weekly Boxoffice Movies</h1>
- <div class="img d-flex justify-content-center">
-     <carousel-3d
-      :height="450"
-      :width='300'
-      :space="380"
-      :count="weeklyBoxOfficeMovieList.length"
-      :display="7"
-      :border="0"
-     >
-    <slide  v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">
-      <img class="carousel-item-img" :src="img_path + movie.poster_path">
-    </slide>
-  </carousel-3d>
- </div>
- <h2 style="text-align: left">#평점이 높은</h2>
-  <div class="popular-list row row-cols-1 row-cols-md-5 gy-3">
-      <MovieCard
-      data-app
-        v-for="(movie, idx) in weeklyBoxOfficeMovieList"
-        :key="idx"
-        :movie="movie"/>
-  </div>
-
-    <!-- 1. Weekly Boxoffice Area -->
-    <!-- 수정하기 : 고화질 이미지로 다시 보내기 -->
-<!--     
-    <h1>Weekly Boxoffice Movies</h1>
-    <div class="container">
-      <div class="d-flex flex-wrap">
-        <div
-          v-for="movie in weeklyBoxOfficeMovieList"
-          :key="movie.index"
-        >
-        <img :src="img_path + movie.poster_path" alt="">        
-        <p>{{movie.title}}</p>
-         
-        </div>
+<!-- style="margin-bottom: 81px" -->
+  <div class="home bg-black" >    
+    <!-- <h1>Weekly Boxoffice Movies</h1> -->
+    <div class="p-5"> 
+      <p class="text-white fw-bold fst-italic text-start fs-4"># Weekly Boxoffice</p>
+      <div class="d-flex justify-content-center">
+          <carousel-3d
+            v-if="weeklyBoxOfficeMovieList.length"          
+            :height='385'
+            :width='300'
+            :space="370"
+            :count="weeklyBoxOfficeMovieList.length"          
+            :border="0"                             
+            :display="7"
+            :autoplay="true" :autoplayTimeout="3500"            
+          >          
+            <slide :index="0">
+              <img :src="weeklyBoxOfficeMovieList[0].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="1">
+              <img :src="weeklyBoxOfficeMovieList[1].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="2">
+              <img :src="weeklyBoxOfficeMovieList[2].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="3">
+              <img :src="weeklyBoxOfficeMovieList[3].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="4">
+              <img :src="weeklyBoxOfficeMovieList[4].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="5">
+              <img :src="weeklyBoxOfficeMovieList[5].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="6">
+              <img :src="weeklyBoxOfficeMovieList[6].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="7">
+              <img :src="weeklyBoxOfficeMovieList[7].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="8">
+              <img :src="weeklyBoxOfficeMovieList[8].poster_path" class="carousel-item-img">        
+            </slide>
+            <slide :index="9">
+              <img :src="weeklyBoxOfficeMovieList[9].poster_path" class="carousel-item-img">        
+            </slide>
+            
+            <!-- <slide v-for="(movie, i) in weeklyBoxOfficeMovieList" :key="i" :index="i">                         
+                <img :src="weeklyBoxOfficeMovieList[i].poster_path" class="carousel-item-img">        
+            </slide> -->
+          </carousel-3d>
       </div>
-    </div> -->
-    <!-- 
-    <div class="detail-area">
-      <iframe :src="videoUrl" frameborder="0"></iframe>
+    </div>
+    <hr class="bg-white">
+      
+    <div class="p-5">    
+      <p class="text-white fw-bold fst-italic text-start fs-5"># Top Rated Movies</p>
+      
+        <!-- <div class="row row-cols-5 gy-3">
+          <MovieCard data-app v-for="(movie, idx) in topRatedMovieList" :key="idx" :movie="movie"/>
+        </div> -->
+
+      <vue-slick-carousel                
+        v-if="topRatedMovieList.length"
+        :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" 
+        >
+        <MovieCard  
+          data-app
+          v-for="(movie, idx) in topRatedMovieList" :key="idx" :movie="movie"/>        
+      </vue-slick-carousel>
     </div> 
-    -->
-      <!-- 2. 해쉬태그 순  -->
-    <hr>
+  
     <br>
-    <h2 v-if="isLogin" style="text-align: left"> #{{nameHashTag1}}(과) 관련된 영화들</h2>
-    <div v-if="isLogin" class="popular-list row row-cols-1 row-cols-md-5 gy-3">
-         <MovieCard
-        data-app
-          v-for="(movie, idx) in HashtagMovieList1"
-          :key="idx"
-          :movie="movie"/>
-    </div>
-
-    <hr>
-    <br>
-    <h3 v-if="isLogin"  style="text-align: left"> #{{nameHashTag2}}(과) 관련된 영화들</h3>
-    <div v-if="isLogin" class="popular-list row row-cols-1 row-cols-md-5 gy-3">
-         <MovieCard
-        data-app
-          v-for="(movie, idx) in HashtagMovieList2"
-          :key="idx"
-          :movie="movie"/>
-    </div>
-
-    <!-- <div class="container">
-      <h3 style="text-align: left"> #{{nameHashTag2}}(과) 관련된 영화들</h3>
-      <div class="row g-4">
-        <div class="col-2 card"
-          v-for="movie in HashtagMovieList2"
-          :key="movie.rank">
-            <img :src="movie.poster_path" alt="" class="card-img-top">           
-            <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">text:{{movie.title}}</p>
-            </div>
-          
-        </div>
+    <!-- 2. 해쉬태그 순  -->
+    <div v-if="isLogin">
+    <hr class="bg-white">
+      <div class="p-5">    
+        <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag1}}와(과) 관련된 영화들</p>
+        <VueSlickCarousel 
+          :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" 
+          v-if="HashtagMovieList1.length">        
+          <MovieCard       
+            data-app    
+            v-for="(movie, idx) in HashtagMovieList1" :key="idx" :movie="movie"/>        
+        </VueSlickCarousel>
       </div> 
-    </div> -->
+    </div>
+    <!-- 2. 해쉬태그 순  -->
+    <div v-if="isLogin">
+    <hr class="bg-white">
+      <div class="p-5">    
+        <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag2}}와(과) 관련된 영화들</p>
+        <VueSlickCarousel :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" v-if="HashtagMovieList2.length">        
+          <MovieCard     
+            data-app      
+            v-for="(movie, idx) in HashtagMovieList2" :key="idx" :movie="movie"/>        
+        </VueSlickCarousel>
+      </div> 
+    </div>
+
     
   </div>
+
+   
 </template>
 
 <script>
-import { Carousel3d, Slide } from 'vue-carousel-3d';
+import { Carousel3d, Slide } from 'vue-carousel-3d'
+import VueSlickCarousel from 'vue-slick-carousel'  
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import {mapState} from "vuex"
 import MovieCard from '@/components/MovieCard'
 //import { mapGetters } from 'vuex'
@@ -109,18 +127,23 @@ export default {
       nameHashTag2: "",
 
       weeklyBoxOfficeMovieList: [],
+      topRatedMovieList: [],
       HashtagMovieList1:[],
-      HashtagMovieList2:[],
-
-      img_path : "https://image.tmdb.org/t/p/w300/"
+      HashtagMovieList2:[],   
+      slickOptions: {
+        slidesToShow: 5,
+        arrows: true,
+        dots: true,
+        infinite: false,
+      },      
     }
   },
 
-  components: {
-    // ImgCarousel,
-   Carousel3d,
+  components: {    
+    Carousel3d,
     Slide,
-    MovieCard
+    MovieCard,
+    VueSlickCarousel,
   },
   methods: {
     setToken: function () {
@@ -131,46 +154,47 @@ export default {
       return config
     },
     getWeeklyBoxOfficeMovieList: function() {
+      console.log('getWeeklyBoxOfficeMovieList')
       this.$store.commit("getWeeklyBoxOfficeMovieList", this.setToken)
     },
-      imageLoaded() {
-                console.log('force load');
-                this.$refs.carousel.$forceUpdate()
-            },
+    imageLoaded() {
+      console.log('force load');
+      this.$refs.carousel.$forceUpdate()
     },
-  // 화면 전환 시 로딩 오래 걸리는 것 수정
-  watch: {
-    // videoUrl: function () {
-    //   const videoId = 'DJs_ihmMZfg'// this.video.id.videoId
-    //   return `https://www.youtube.com/embed/${videoId}`
-    // },
-
-    // 1114 - 1. 주간 박스오피스 영화
-    // weeklyBoxOfficeMovies: function () {
-    //   axios({
-    //     method: 'get',
-    //     url: URL+'movies/searchWeeklyBoxOfficeMovies',
-    //     // params
-    //   })
-    //     .then( res => {
-    //       console.log(res.data)
-    //       this.weeklyBoxOfficeMovieList = res.data
-    //     })
-    //     .catch( err => {
-    //       console.log(err)
-    //     })      
-    //   return this.weeklyBoxOfficeMovieList
-    // },
-    
+    next() {
+      this.$refs.slick.next();
+    },
+    prev() {
+      this.$resfs.slcik.prev();
+    },
+    reInit() {
+      this.$nextTick(() => {
+        this.$resfs.slick.reSlick();
+      })
+    }
   },
-    computed: {
+  computed: {
      ...mapState([
       'isLogin'
     ])
   },
   created() {
+    // 수정하기 : state에 넣기
+    // this.getWeeklyBoxOfficeMovieList()
+    axios({
+        method: 'get',
+        url: URL+'movies/searchWeeklyBoxOfficeMovies',
+        // params
+      })
+        .then( res => {
+          console.log(res.data)
+          this.weeklyBoxOfficeMovieList = res.data
+        })
+        .catch( err => {
+          console.log(err)
+        })      
+    
 
-    //this.getWeeklyBoxOfficeMovieList()
     axios({
       method: 'get',
       url: URL+'movies/searchTopRatedMovies/',
@@ -178,8 +202,8 @@ export default {
     })
       .then( res => {
         console.log(res.data)
-        this.weeklyBoxOfficeMovieList = res.data
-      
+        // this.weeklyBoxOfficeMovieList = res.data
+        this.topRatedMovieList = res.data      
       })
       .catch( err => {
         console.log(err)
@@ -212,13 +236,33 @@ export default {
         console.log(err)
       })
 
+  },
+  watch: {
+
   }
 }
 </script>
 
 <style>
+/* 아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ모르겠다 */
+  .slick-list {    
+    transform: none !important;
 
-    .carousel-item-img {
+  }
+  .slick-track {
+    transform: none !important;
+  }
+
+  .slick-dots li button:before{    
+    opacity: 0.4;
+    color: white;
+  }
+  .slick-dots li.slick-active button::before {
+    color: #fff;
+    opacity: 1;
+  }
+
+  .carousel-item-img {
         height:43vh!important ;
     }
 

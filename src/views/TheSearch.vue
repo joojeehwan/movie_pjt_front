@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>검색 결과</h1>
-    <p>"{{ $route.params.searchKeyword }}"에 대한 검색 결과입니다.</p>
+  <div class="container">
+    <p class="text-white fw-bold fst-italic text-start fs-4"># "{{ $route.params.searchKeyword }}"에 대한 검색 결과입니다.</p>        
 
     <div       
       class="row row-cols-1 row-cols-md-5 gy-3 container" v-if="searchMovieList.length >= 1">
@@ -23,7 +22,7 @@ export default {
   name: 'Search',
   data: function () {
     return {
-      searchMovieList: null,   
+      searchMovieList: [],   
        
     }
   },
@@ -34,10 +33,9 @@ export default {
     getSearchBarMovies: function () {      
       axios({
           method: 'GET',
-          url: `http://127.0.0.1:8000/movies/searchBarMovies/${this.$route.params.searchKeyword}/`,                    
+          url: `http://127.0.0.1:8000/movies/searchBarMovies/${this.$route.params.searchKeyword}/`,                              
         })
-          .then(res => {
-            console.log(res.data)            
+          .then(res => {            
             this.searchMovieList = res.data            
           })
           .catch(err => {

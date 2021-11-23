@@ -1,11 +1,11 @@
 <template>
   <div>
     <div id="nav">
-      <header class="p-3 bg-dark text-white">
-        <div class="container">
+      <header class="bg-dark text-white">
+        <div class="p-3">
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><img src="@/assets/logo.png" alt="logo" style="width: 20px"></li>
+              <li><img src="@/assets/logo1.png" alt="logo" style="width: 30px;"></li>
               <li><router-link to="/" class="nav-link px-2 text-white">Home</router-link></li>
               <ul style= "-webkit-padding-start:0px" v-if="isLogin">
                   <li><router-link :to="{ name: 'Index'}" class="nav-link px-2 text-white">Community</router-link></li>
