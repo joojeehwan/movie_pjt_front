@@ -129,7 +129,7 @@ export default new Vuex.Store({
      const index = state.comments.indexOf(commentItem)
       state.comments.splice(index, 1)
     },
-    
+
     GET_COMMENTS(state, res) {
       state.comments = res
     },
@@ -186,7 +186,7 @@ export default new Vuex.Store({
     getMovies({commit}, token) {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}movies/searchWeeklyBoxOfficeMovies`,
+        url: `${SERVER_URL}movies/searchAllMovies/`,
         headers: token,
       })
       .then(res => {
@@ -282,6 +282,8 @@ export default new Vuex.Store({
       })
       .then((res) => {
         commit('CREATE_COMMENT', res.data)
+       
+        
       })
       .catch(err => console.log(err))
     },

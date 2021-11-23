@@ -54,7 +54,7 @@
                     평점 : {{ movieDetailInformation.vote_average }}
                    </div>
                    <div class="movie-actors">
-                    {{getActorList()}}
+                    {{movieDetailInformation.actors_list}}
                    </div>
                   </div>
                 </div>
@@ -115,8 +115,7 @@ export default {
   methods: {
     getActorList: function () {
      this.actor =  this.movieDetailInformation.actors_list
-
-
+     return this.actor.slice(0,2).join()
     },
     callAxios: function() {
       var detailTmdbID = this.movie.tmdb_id

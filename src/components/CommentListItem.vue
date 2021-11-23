@@ -8,19 +8,23 @@
 </template>
 
 <script>
+
+//import router from '@/router'
+
+
 export default {
   name:"CommentListItem", 
     props: {
       comment: {
         type: Object, 
         required: true, 
-      }
+      }, 
   }, 
     data() {
       return {
         commentItem: {
           content: this.comment.content
-        }
+        }, 
       }
     }, 
     methods: {
@@ -31,7 +35,7 @@ export default {
       }
       return config
     },
-    updateComment() {
+      updateComment() {
       const commentItemSet = {
         commentItem: this.commentItem,
         comment_id: this.comment.id,
@@ -46,8 +50,10 @@ export default {
         token: this.setToken()
       }
       this.$store.dispatch('deleteComment', commentItemSet)
+ 
       }
-    },
+      
+    }
   
 }
 </script>
