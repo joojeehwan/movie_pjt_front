@@ -24,6 +24,7 @@ export default new Vuex.Store({
     reviews: [],
     reviewDetail: null,
     movieTitles: [],
+    moviePosterPath: [],
     comments: [],
     comment: null,
 
@@ -51,6 +52,9 @@ export default new Vuex.Store({
     comments(state) {
       return state.comments
     },
+    posterPath(state) {
+      return state.moviePosterPath
+    }
   },
   mutations: {
     //accounts
@@ -84,6 +88,16 @@ export default new Vuex.Store({
         tmp_list.push(tmp)
       }
       state.movieTitles = tmp_list
+    },
+    GET_POSTER_PATH(state, res) {
+      const temp_list = []
+      for (var value of res) {
+        const tmp = {
+          name: value.title, value: value.poster_path
+        }
+        temp_list.push(tmp)
+      }
+      state.moviePosterPath = temp_list
     },
     GET_GENRES(state, res) {
       state.genre_names = res
@@ -228,6 +242,7 @@ export default new Vuex.Store({
        // console.log(res)
         commit('GET_MOVIES', res.data)
         commit('GET_MOVIE_TITLES', res.data)
+        commit("GET_POSTER_PATH", res.data)
       })
       .catch(err => console.log(err))
     },

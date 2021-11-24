@@ -11,24 +11,24 @@
       >
       <v-row no-gutters>
       <v-col cols="3">
-       <p class="text-left" > 영화제목 : {{review.movie_title}} </p>
+       <p class="text-left" >  {{review.movie_title}} </p>
       </v-col> 
       <v-col cols="9">
          <v-fade-transition leave-absolute>
-          <span v-if="open">what do you think about the movie?</span>
+          <h5 v-if="open" style="text-align:left;">"what do you think about the movie?"</h5>
         <v-row
               v-else
               no-gutters
               style="width: 100%"
           >
         <v-col cols="4">
-        작성일 : {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} 
+         {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} 
         </v-col>
         <v-col cols="4">
-        제목 : {{review.title}}
+       {{review.title}}
         </v-col>
         <v-col cols="4"> 
-        조회수 : {{count}}
+         {{count}}
         </v-col> 
         </v-row>
         </v-fade-transition>
@@ -36,19 +36,41 @@
         </v-row>
       </v-expansion-panel-header>
 
-    <v-expansion-panel-content>
-     <!-- // 영화 : {{reviewItem.movie_title}} --> 포스터
+  <div class="float-start">
+    <v-expansion-panel-content
+    
+    >
+     <!-- // 영화 : {{reviewItem.movie_title}} --> 
+       <img :src="`${getPostPath(imgSrc)}`" width="400" alt="NoPosterImage"> 
       </v-expansion-panel-content>
-    <v-expansion-panel-content>
-      제목 : {{reviewItem.title}}
-      </v-expansion-panel-content>
-    <v-expansion-panel-content>
+  </div>
+  <div>
+    <v-row no-gutters>
+    <v-col cols="4">
+    <v-expansion-panel-content class="text">
+      <p class="text-left">제목 : {{reviewItem.title}} </p>
+    </v-expansion-panel-content>
+    </v-col>
+    </v-row>
+
+   <v-row no-gutters>
+    <v-col cols="4">
+    <v-expansion-panel-content class="text">
       평점 : {{reviewItem.rank}}
     </v-expansion-panel-content>
+    </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2">
     <v-expansion-panel-content>
-      <textarea name="reviewContent" cols="30" rows="10" v-model="reviewItem.content" placeholder="내용">
-      </textarea>
+      <textarea name="reviewContent" cols="50" rows="10" v-model="reviewItem.content" placeholder="내용">
+      </textareaname=>
     </v-expansion-panel-content>
+      </v-col>
+    </v-row>
+  </div>
+  <v-row>
+    <v-col cols="4">
     <v-expansion-panel-content>
       <h3>Comments</h3>
       <CommentForm :review="review"/>
@@ -60,6 +82,8 @@
         <button class="btn-delete" @click="deleteReview">리뷰 삭제</button>
       </div>
     </v-expansion-panel-content>
+    </v-col>
+  </v-row>
   </v-expansion-panel>
   </div>
 </template>
@@ -69,6 +93,7 @@
 import axios from 'axios'
 import CommentForm from "@/components/CommentForm"
 import CommentList from "@/components/CommentList"
+import { mapGetters } from 'vuex'
 
 
 export default {
@@ -141,10 +166,25 @@ name:"CommunityHomeItem",
         token: this.setToken()
       }
       this.$store.dispatch('deleteReview', reviewItemSet)
+    }, 
+    getPostPath(number) {
+      return this.posterPath[number].value
+    }
+  },
+    computed: {
+    ...mapGetters([
+      'posterPath'
+    ]),
+    imgSrc: function () {
+      
+      const temp = this.posterPath.map(x=>x.name).indexOf(this.reviewItem.movie_title)
+      
+      return temp
     }
   },
    created() {
     console.log(this.review)
+    this.$store.dispatch('getMovies', this.setToken())
   },
 }
 
@@ -171,4 +211,13 @@ name:"CommunityHomeItem",
 .v-expansion-panel input, textarea{
   color: white;
 }
+
+.text {
+  font-size: 20px;
+  text-align: left;
+  font-weight: bold;
+}
+
+
+textarea {resize : vertical;} 
 </style>

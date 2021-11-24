@@ -1,5 +1,27 @@
 <template>
+<div class="container">
+
  <v-row class="review-list-inset">
+   
+    
+     <v-simple-table>
+    <thead>
+          <tr>
+            <th class="text-left">
+              제목
+            </th>
+            <th class="text-left">
+              작성일자
+            </th>
+            <th class="text-left">
+              리뷰제목
+            </th>
+            <th class="text-left">
+              조회수
+            </th>
+          </tr>
+      </thead>
+      </v-simple-table>
     <v-expansion-panels inset dark>
       <v-expansion-panel
         v-for="(review, idx) in reviews"
@@ -11,7 +33,17 @@
      
       </v-expansion-panel>
     </v-expansion-panels>
+    <div class="text-center">
+      <v-pagination
+        v-model="page"
+        :length="4"
+        circle
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+      ></v-pagination>
+    </div>
   </v-row>
+</div>
 </template>
 
 <script>
@@ -20,6 +52,11 @@ import CommunityHomeItem from '@/components/CommunityHomeItem'
 
 export default {
   name: "CommunityHome", 
+  data() {
+    return {
+      page:1, 
+    }
+  },
   components: {
     CommunityHomeItem
   },

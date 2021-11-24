@@ -36,9 +36,7 @@
                 <v-rating
                   v-model="reviewItem.rank"
                   color="yellow"
-                  background-color="grey darken-1"
-                  empty-icon="$ratingFull"
-                  half-increments
+                  background-color="red lighten-3"
                   hover
                   large
                 ></v-rating>
@@ -113,6 +111,7 @@ export default {
       this.movie_title = null,
       this.title = null,
       this.content = null,
+      this.rank = null,
       this.dialog = false
     }
   },

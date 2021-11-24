@@ -52,16 +52,18 @@
                         <div
                         v-if="movieDetailInformation.release_date"
                         class="movie-release-date"
+                        style="text-align:left;"
                           >
-                          개봉  :  {{ movieDetailInformation.release_date }}
+                          개봉 : {{ movieDetailInformation.release_date }}
                         </div>
                         <div
                         v-else>
                         해당 영화는 개봉일 정보를 제공하지 않습니다. 
                         </div>
                         <div class="movie-genres" 
-                        v-if="movieDetailInformation.genres_list">
-                            {{ movieDetailInformation.genres_list[0]}} , {{ movieDetailInformation.genres_list[1]}}
+                        v-if="movieDetailInformation.genres_list"
+                        style="text-align:left;">
+                          장르 : {{ movieDetailInformation.genres_list[0]}} , {{ movieDetailInformation.genres_list[1]}}
                         </div>
                         <div v-else>
                           해당 영화는 장르 정보를 제공하지 않습니다. 
@@ -80,7 +82,9 @@
                     <div class="container justify-content-end">
                    <div 
                    v-if="movieDetailInformation.vote_average"
-                   class="movie-vote">
+                   class="movie-vote"
+                   style="text-align:left;"
+                   >
                     평점 : {{ movieDetailInformation.vote_average }} 
                    </div>
                    <div
@@ -90,8 +94,10 @@
                    </div>
                    <div 
                    v-if="movieDetailInformation.director"
-                   class="movie-vote">
-                     / 감독 : {{ movieDetailInformation.director }}
+                   class="movie-vote"
+                   style="text-align:left;"
+                   >
+                     감독 : {{ movieDetailInformation.director }}
                    </div>
                    <div v-else>
                     해당 영화는 감독 정보를 제공하지 않습니다. 
@@ -293,6 +299,8 @@ export default {
  .movie-detail-overview-body {
   font-size: 20px;
   color: #dddddddd;  
+  text-align: justify;
+  text-justify: inter-word;
   }  
 
 </style>
