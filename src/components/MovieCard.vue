@@ -197,7 +197,8 @@ export default {
   /* position: relative; */
   
   display: block;
-  flex: 1 1 0px;
+  /* flex: 1 1 0px; */
+  flex-flow: row wrap;
   transition: transform 500ms;
 }
 

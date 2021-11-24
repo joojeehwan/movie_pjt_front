@@ -4,7 +4,7 @@
         <p class="col-md-4 mb-0 text-muted text-start">&copy; 2021 SSAFY Project</p>
 
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-          <img src="@/assets/logo1.png" alt="" style="height: 20px">
+          <img src="@/assets/logo1.png" alt="" style="height: 25px" class="p-1">
           <p class="text-white fst-italic my-3">무비</p>
         </a>
 

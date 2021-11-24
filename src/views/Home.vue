@@ -98,8 +98,8 @@
     </div>
     <!-- 2. 해쉬태그 순  -->
     <div v-if="isLogin">
-    <hr class="bg-white my-slick">
-      <div class="p-5">    
+    <hr class="bg-whitek">
+      <div class="p-5 my-slick">    
         <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag2}}와(과) 관련된 영화들</p>
         <VueSlickCarousel :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" v-if="HashtagMovieList2.length">        
           <MovieCard     
@@ -145,8 +145,6 @@ export default {
           'title': '',
           'tmdb_id': '',
         },
-      
-  
     }
   },
 
