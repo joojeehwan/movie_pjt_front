@@ -1,7 +1,6 @@
 <template>
-  <div class="bg-dark">    
-    
-      <footer class="d-flex flex-wrap justify-content-between align-items-center  border-top">
+  <div class="bg-dark">        
+      <footer class="d-flex  justify-content-between align-items-center  border-top">
         <p class="col-md-4 mb-0 text-muted text-start">&copy; 2021 SSAFY Project</p>
 
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
