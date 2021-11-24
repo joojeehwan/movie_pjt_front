@@ -1,6 +1,5 @@
 <template>
    <div>
-
      <v-expansion-panel>
       <v-expansion-panel-header
        @click="[callAxiosDetailReview(review.id),clickviews()]"
@@ -73,8 +72,18 @@
     <v-col cols="4">
     <v-expansion-panel-content>
       <div>
-        <button class="btn-modify" style="font-family: 'Noto Sans KR', sans-serif;" @click="updateReview">리뷰 수정</button>
-        <button class="btn-delete" style="font-family: 'Noto Sans KR', sans-serif;" @click="deleteReview">리뷰 삭제</button>
+        <button 
+        class="btn-modify" 
+        style="font-family: 'Noto Sans KR', sans-serif;"
+         @click="updateReview"
+         v-if="getToken.user_id===this.reviewItem.user_id"
+         >리뷰 수정
+         </button>
+        <button class="btn-delete" 
+        style="font-family: 'Noto Sans KR', sans-serif;" 
+        @click="deleteReview"
+        v-if="getToken.user_id===this.reviewItem.user_id"
+        >리뷰 삭제</button>
       </div>
     </v-expansion-panel-content>
     </v-col>
@@ -112,8 +121,8 @@ name:"CommunityHomeItem",
         movie_title: this.review.movie_title,
         title: this.review.title,
         content: this.review.content,
-        rank: this.review.rank
-
+        rank: this.review.rank,
+        user_id: null,
       },
       count: this.review.click,
       poster_path: ""
@@ -138,10 +147,12 @@ name:"CommunityHomeItem",
         })
         .then(res=> {
           console.log(res)
+          console.log("!!!!!!!!!!!!")
           this.reviewItem.movie_title = res.data.movie_title
           this.reviewItem.title = res.data.title
           this.reviewItem.content = res.data.content
           this.reviewItem.rank = res.data.rank
+          this.reviewItem.user_id = res.data.user
         })
         .catch(err =>{
           console.log(err)
@@ -177,7 +188,8 @@ name:"CommunityHomeItem",
   },
     computed: {
     ...mapGetters([
-      'posterPath'
+      'posterPath', 
+      'getToken'
     ]),
     imgSrc: function () {
       

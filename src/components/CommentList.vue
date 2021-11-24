@@ -1,9 +1,12 @@
 <template>
   <div>
+  
+
   <CommentListItem
-  v-for="(comment, idx) in comments"
-  :key="idx"
+  v-for="comment in comments"
+  :key="comment.id"
   :comment="comment"
+  @delete="deleteComment"
   />
   </div>
 </template>
@@ -31,6 +34,13 @@ export default {
       }
       return config
     },
+    deleteComment() {
+      const commentListSet = {
+      review_id: this.review.id,
+      token: this.setToken()
+    }
+      this.$store.dispatch('getComments', commentListSet)
+    }
   }, 
   filters: {
     reverse: function(value) {
@@ -48,7 +58,6 @@ export default {
       token: this.setToken()
     }
     this.$store.dispatch('getComments', commentListSet)
-
   }
 
 }

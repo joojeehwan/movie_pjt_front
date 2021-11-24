@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '@/router'
 import swal from 'sweetalert'
+import VueJwtDecode from 'vue-jwt-decode'
+import createPersistedState from "vuex-persistedstate";
 
 
 const SERVER_URL = 'http://127.0.0.1:8000/'
@@ -10,6 +12,7 @@ const SERVER_URL = 'http://127.0.0.1:8000/'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     //accounts
     isLogin:false,
@@ -28,15 +31,16 @@ export default new Vuex.Store({
     comments: [],
     comment: null,
 
+    jwtToken: null, //수정 삭제 용
     user_list: [],
     isAdmin:false,  // admin 확인
    
   },
   getters: {
+    
     user_list(state) {
       return state.user_list
     },
-
     weeklyBoxOfficeMovieList(state) {
       return state.weeklyBoxOfficeMovieList
     },
@@ -54,10 +58,17 @@ export default new Vuex.Store({
     },
     posterPath(state) {
       return state.moviePosterPath
+    },
+    getToken(state) {
+      return state.jwtToken
     }
   },
   mutations: {
     //accounts
+
+    JWT_TOKEN(state, res) {
+      state.jwtToken = res
+    },
 
     LOGIN(state) {
       state.isLogin = true
@@ -165,22 +176,38 @@ export default new Vuex.Store({
     userName({commit}, useranme) {
       commit("USER_NAME",useranme )
     },
+
+    // getUserInfo({commit}, token) {
+    //     axios({
+    //       method: 'GET',
+    //       url: `${SERVER_URL}moives/searchAllMovies/`,
+    //       headers: token,
+    //     })
+    //     .then(res=> {
+    //       console.log(res.data)
+    //       commit("GET_ALL_USER_INFO")
+    //     })
+    //     .catch(err => {
+    //       console.log(err.response)
+    //     })
+    // },
     // login_logout
     login({commit}, credentials) {
-      commit("USER_NAME",credentials.username)
+      commit("USER_NAME", credentials.username)
       axios({
         method: "POST", 
         url: `${SERVER_URL}accounts/api-token-auth/`,
         data: credentials
       })
       .then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         localStorage.setItem('jwt', res.data.token)
         // admin 확인
         if (credentials.username === 'admin') {
           localStorage.setItem('isAdmin', true)
         }
         commit('LOGIN')
+        commit("JWT_TOKEN", VueJwtDecode.decode(res.data.token))
         router.push({ name: 'Home' })
       })
       .catch(err => {
@@ -271,7 +298,7 @@ export default new Vuex.Store({
         console.log(res)
         commit('CREATE_REVIEW')
         router.push({name: 'Index'})
-        router.go()
+        //router.go()
       })
       .catch(err => console.log(err))
     },
@@ -302,7 +329,7 @@ export default new Vuex.Store({
       })
       .catch(err=>{
         console.log(err)
-        swal("타인이 작성한 리뷰은 지울 수 없습니다.")
+        // swal("타인이 작성한 리뷰은 지울 수 없습니다.")
       })
     },
     //Commuity - COMMENT ACTTONS
@@ -327,9 +354,8 @@ export default new Vuex.Store({
         headers: objs.token
       })
       .then((res) => {
+        console.log(res)
         commit('CREATE_COMMENT', res.data)
-       
-        
       })
       .catch(err => console.log(err))
     },
