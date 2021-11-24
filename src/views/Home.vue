@@ -114,7 +114,7 @@
       <div class="p-5 my-slick">    
         <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag1}}와(과) 관련된 영화들</p>
         <VueSlickCarousel 
-          :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" 
+          :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" :draggable="isDots" 
           v-if="HashtagMovieList1.length">        
           <MovieCard       
             data-app    
@@ -175,6 +175,7 @@ export default {
           'tmdb_id': '',
         },
       isCollapse: true,
+      isDots: true,
     }
   },
 
@@ -230,6 +231,7 @@ export default {
     changeHashtags: function (index) {
       this.nameHashTag1 = this.nameHashTags[index]
       this.HashtagMovieList1 = this.HashtagMovieLists[index]
+      this.isDots = false      
     }
 
   },
