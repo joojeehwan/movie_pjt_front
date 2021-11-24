@@ -53,8 +53,18 @@
       </div>
     </div>
     <hr class="bg-white">
+    
+    <!-- 디테일뷰 화면 위치 어떻게 옮기나 -->
+    <div id="slick1" style="height: 1px"> 
+      <vue-slick-carousel v-if="topRatedMovieList.length">
+        <MovieCard data-app :movie="tmpmovie"/>
+      </vue-slick-carousel>
+      <!-- <MovieCard data-app v-for="(movie, idx) in topRatedMovieList" :key="idx" :movie="movie"/>         -->
+    </div> 
+    <!--  -->
+
       
-    <div class="p-5">    
+    <div class="p-5 my-slick">    
       <p class="text-white fw-bold fst-italic text-start fs-5"># Top Rated Movies</p>
       
         <!-- <div class="row row-cols-5 gy-3">
@@ -63,7 +73,7 @@
 
       <vue-slick-carousel                
         v-if="topRatedMovieList.length"
-        :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" 
+        :arrows="true" :dots="true" :slidesToShow="5" :infinite="false"        
         >
         <MovieCard  
           data-app
@@ -74,8 +84,8 @@
     <br>
     <!-- 2. 해쉬태그 순  -->
     <div v-if="isLogin">
-    <hr class="bg-white">
-      <div class="p-5">    
+      <hr class="bg-white">
+      <div class="p-5 my-slick">    
         <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag1}}와(과) 관련된 영화들</p>
         <VueSlickCarousel 
           :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" 
@@ -88,7 +98,7 @@
     </div>
     <!-- 2. 해쉬태그 순  -->
     <div v-if="isLogin">
-    <hr class="bg-white">
+    <hr class="bg-white my-slick">
       <div class="p-5">    
         <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag2}}와(과) 관련된 영화들</p>
         <VueSlickCarousel :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" v-if="HashtagMovieList2.length">        
@@ -130,12 +140,13 @@ export default {
       topRatedMovieList: [],
       HashtagMovieList1:[],
       HashtagMovieList2:[],   
-      slickOptions: {
-        slidesToShow: 5,
-        arrows: true,
-        dots: true,
-        infinite: false,
-      },      
+      tmpmovie: {
+          'poster_path': '',
+          'title': '',
+          'tmdb_id': '',
+        },
+      
+  
     }
   },
 
@@ -143,7 +154,7 @@ export default {
     Carousel3d,
     Slide,
     MovieCard,
-    VueSlickCarousel,
+    VueSlickCarousel    
   },
   methods: {
     setToken: function () {
@@ -165,11 +176,11 @@ export default {
       this.$refs.slick.next();
     },
     prev() {
-      this.$resfs.slcik.prev();
+      this.$refs.slcik.prev();
     },
     reInit() {
       this.$nextTick(() => {
-        this.$resfs.slick.reSlick();
+        this.$refs.slick.reSlick();
       })
     }
   },
@@ -203,7 +214,7 @@ export default {
       .then( res => {
         console.log(res.data)
         // this.weeklyBoxOfficeMovieList = res.data
-        this.topRatedMovieList = res.data      
+        this.topRatedMovieList = res.data              
       })
       .catch( err => {
         console.log(err)
@@ -245,13 +256,17 @@ export default {
 
 <style>
 /* 아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ모르겠다 */
-  .slick-list {    
+  #slick1 .slick-list {    
     transform: none !important;
+  }
+  
+  #slick1 .slick-track {
+    transform: none !important;
+  }
 
-  }
-  .slick-track {
-    transform: none !important;
-  }
+  .my-slick ul {
+    margin-left: 40%;    
+  } 
 
   .slick-dots li button:before{    
     opacity: 0.4;

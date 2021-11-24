@@ -15,6 +15,7 @@ export default new Vuex.Store({
     isLogin:false,
     //userName
     user_names: [],
+    user_name:null,
     //weeklyBoxOfficeMovieList: [],
     weeklyBoxOfficeMovieList: [],
     // movies
@@ -25,9 +26,16 @@ export default new Vuex.Store({
     movieTitles: [],
     comments: [],
     comment: null,
+
+    user_list: [],
+    isAdmin:false,  // admin 확인
    
   },
   getters: {
+    user_list(state) {
+      return state.user_list
+    },
+
     weeklyBoxOfficeMovieList(state) {
       return state.weeklyBoxOfficeMovieList
     },
@@ -49,9 +57,13 @@ export default new Vuex.Store({
 
     LOGIN(state) {
       state.isLogin = true
+
+      // admin 확인
+      state.isAdmin = localStorage.getItem('isAdmin')            
     }, 
     LOGOUT(state) {
       state.isLogin = false
+      state.isAdmin = false // amdin 확인
     },
     //GET_WEEKLY_BOX_OFFICE_MOVIE_LIST
 
@@ -122,7 +134,15 @@ export default new Vuex.Store({
       state.comments = res
     },
     USER_NAME(state, res) {
-      state.user_names = res
+      state.user_names = res  
+      // state.user_name = res
+      // if ( res === 'admin')     {
+      //   state.isAdmin = true
+      // }
+    },
+
+    GET_USER_LIST(state, res) {
+      state.user_list = res
     }
    
   },
@@ -140,8 +160,12 @@ export default new Vuex.Store({
         data: credentials
       })
       .then(res => {
-        console.log(res)
+        // console.log(res.data)
         localStorage.setItem('jwt', res.data.token)
+        // admin 확인
+        if (credentials.username === 'admin') {
+          localStorage.setItem('isAdmin', true)
+        }
         commit('LOGIN')
         router.push({ name: 'Home' })
       })
@@ -153,9 +177,23 @@ export default new Vuex.Store({
       if (token) {
         commit('LOGIN')
       }
+      
+      // user 목록
+      axios({
+        method: 'GET',
+        url: `${SERVER_URL}accounts/getuserlist/`,
+        headers: token,
+      })
+      .then(res => {
+        console.log(res)
+        commit('GET_USER_LIST', res.data)        
+      })
+      .catch(err => console.log(err))
+    
     },
     logout({commit}) {
       localStorage.removeItem('jwt')
+      localStorage.removeItem('isAdmin')  // admin 확인
       commit('LOGOUT')
        router.push({ name: 'Login' })
     },
@@ -313,7 +351,7 @@ export default new Vuex.Store({
     },
 
   },
-  modules: {
+ modules: {
 
-  },
+  }, 
 })

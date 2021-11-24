@@ -7,7 +7,9 @@
     transition="dialog-bottom-transition"      
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-img        
+      <v-img
+        v-if="imgSrc"
+        
         style="height:330px; width:220px; object-fit:cover"
         :src="imgSrc" alt="포스터 없음"
         v-bind="attrs"
@@ -130,7 +132,8 @@ export default {
     movie: {
       type: Object,
       required: true
-    }
+    },    
+    
   },
     data() {
     return {

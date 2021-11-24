@@ -21,8 +21,8 @@ import MovieCard from '@/components/MovieCard'
 export default {
   name: 'Search',
   data: function () {
-    return {
-      searchMovieList: [],   
+    return {      
+      searchMovieList: [], 
        
     }
   },
@@ -36,7 +36,7 @@ export default {
           url: `http://127.0.0.1:8000/movies/searchBarMovies/${this.$route.params.searchKeyword}/`,                              
         })
           .then(res => {            
-            this.searchMovieList = res.data            
+            this.searchMovieList = res.data                 
           })
           .catch(err => {
             console.log(err)

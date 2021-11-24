@@ -9,15 +9,15 @@
               <li><router-link to="/" class="nav-link px-2 text-white">Home</router-link></li>
               <ul style= "-webkit-padding-start:0px" v-if="isLogin">
                   <li><router-link :to="{ name: 'Index'}" class="nav-link px-2 text-white">Community</router-link></li>
-                  <li><router-link @click.native="logout" to="#" class="nav-link px-2 text-white">Logout</router-link></li>              
+                  <li><router-link @click.native="logout" to="#" class="nav-link px-2 text-white">Logout</router-link></li> 
+                  <li v-if="isAdmin"><a href="http://127.0.0.1:8000/admin" class="nav-link px-2 text-white">Admin</a></li>
+                  
               </ul>
               <ul style= "-webkit-padding-start:0px" v-else>
                 <!-- 로그아웃 했을 경우 -->
                 <!-- <li><router-link :to="{ name: 'Login'}" class="nav-link px-2 text-white">Community</router-link></li> -->
                 <li><router-link :to="{ name: 'Login'}"  class="nav-link px-2 text-white">Login</router-link></li>              
               </ul>
-              
-
             </ul>
           
             <div class="d-flex gap-3 col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -82,11 +82,11 @@ export default {
       'checkLogin'
     ]),
     ...mapState([
-      'isLogin'
+      'isLogin', 'user_list', 'isAdmin'
     ])
   },
   created() {
-    this.$store.dispatch('checkLogin', this.getToken())
+    this.$store.dispatch('checkLogin', this.getToken())    
   }
 
 }

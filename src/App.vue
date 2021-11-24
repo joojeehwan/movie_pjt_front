@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="page-container bg-black">
     <!-- 1. nav bar -->    
-    <navbar @login="isLogin=true" :isLogin="isLogin"></navbar>
+    <navbar @login="isLogin=true" :isLogin="isLogin"></navbar> 
     <!-- 2. main  -->
     <Main class="wrap"></Main>    
     <!-- 3. footer -->
@@ -30,6 +30,7 @@ export default {
     logout: function () {
       this.isLogin = false
       localStorage.removeItem('jwt')
+      localStorage.removeItem('isAdmin')
       this.$router.push({ name: 'Login' })
     }
 
