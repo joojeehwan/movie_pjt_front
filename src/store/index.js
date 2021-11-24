@@ -19,7 +19,6 @@ export default new Vuex.Store({
     weeklyBoxOfficeMovieList: [],
     // movies
     movies: [],
-    genre_names: [],
     // community
     reviews: [],
     reviewDetail: null,
@@ -44,21 +43,6 @@ export default new Vuex.Store({
     comments(state) {
       return state.comments
     },
-    randomMovies(state) {
-      return state.randomMovies
-    },
-    genres(state) {
-      return state.genres
-    },
-    genre_names(state) {
-      return state.genre_names
-    },
-    recommendMovies(state) {
-      return state.recommendMovies
-    },
-    bestGenre(state) {
-      return state.bestGenre
-    }
   },
   mutations: {
     //accounts

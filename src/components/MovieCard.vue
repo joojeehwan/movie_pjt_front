@@ -53,22 +53,46 @@
                           >
                           개봉  :  {{ movieDetailInformation.release_date }}
                         </div>
+                        <div
+                        v-else>
+                        해당 영화는 개봉일 정보를 제공하지 않습니다. 
+                        </div>
                         <div class="movie-genres" 
                         v-if="movieDetailInformation.genres_list">
                             {{ movieDetailInformation.genres_list[0]}} , {{ movieDetailInformation.genres_list[1]}}
+                        </div>
+                        <div v-else>
+                          해당 영화는 장르 정보를 제공하지 않습니다. 
                         </div>
                         <div class="movie-actors"
                         v-if="movieDetailInformation.actors_list">
                           {{ movieDetailInformation.actors_list[0]}} , {{ movieDetailInformation.actors_list[1]}}
                           </div>
+                        <div
+                        v-else
+                        >
+                        해당 영화는 배우 정보를 제공하지 않습니다.
+                        </div>
                     </div>
                   <div class="movie-detail-info-header-right">
                     <div class="container justify-content-end">
-                   <div class="movie-vote">
+                   <div 
+                   v-if="movieDetailInformation.vote_average"
+                   class="movie-vote">
                     평점 : {{ movieDetailInformation.vote_average }} 
                    </div>
-                   <div class="movie-vote">
+                   <div
+                   v-else
+                   >
+                    해당 영화는 평점 정보를 제공하지 않습니다.
+                   </div>
+                   <div 
+                   v-if="movieDetailInformation.director"
+                   class="movie-vote">
                      / 감독 : {{ movieDetailInformation.director }}
+                   </div>
+                   <div v-else>
+                    해당 영화는 감독 정보를 제공하지 않습니다. 
                    </div>
                     </div>
                   </div>
@@ -80,12 +104,12 @@
                   <hr>
                   <div
                     v-if="movieDetailInformation.overview"
-                    class="movie-detail-overview-body">
-                    {{ movieDetailInformation.overview }}
+                    class="movie-detail-overview-body ">
+                    {{movieDetailInformation.overview}}
                   </div>
                    <div v-else
                       class="movie-detail-overview-body">
-                      해당 영화는 줄거리가 제공되지 않습니다.
+                      해당 영화는 줄거리 정보를 제공하지 않습니다.
                     </div>          
               </div>
           </div>

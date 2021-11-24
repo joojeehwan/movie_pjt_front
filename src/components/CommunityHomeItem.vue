@@ -1,20 +1,43 @@
 <template>
    <div>
 
-     
+     <v-expansion-panel
+      :readonly="false"
+      >
       <v-expansion-panel-header
        @click="[callAxiosDetailReview(review.id),clickviews()]"
        v-model="count"
-       >
-       영화제목 : {{review.movie_title}} ||
-       작성일 : {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} ||
-       리뷰제목 : {{review.title}} ||
-       조회수 : {{count}}
-       
-        </v-expansion-panel-header>
+       v-slot="{ open }"
+      >
+      <v-row no-gutters>
+      <v-col cols="3">
+       <p class="text-left" > 영화제목 : {{review.movie_title}} </p>
+      </v-col> 
+      <v-col cols="9">
+         <v-fade-transition leave-absolute>
+          <span v-if="open">what do you think about the movie?</span>
+        <v-row
+              v-else
+              no-gutters
+              style="width: 100%"
+          >
+        <v-col cols="4">
+        작성일 : {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} 
+        </v-col>
+        <v-col cols="4">
+        제목 : {{review.title}}
+        </v-col>
+        <v-col cols="4"> 
+        조회수 : {{count}}
+        </v-col> 
+        </v-row>
+        </v-fade-transition>
+      </v-col>
+        </v-row>
+      </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      영화 : {{reviewItem.movie_title}}
+     <!-- // 영화 : {{reviewItem.movie_title}} --> 포스터
       </v-expansion-panel-content>
     <v-expansion-panel-content>
       제목 : {{reviewItem.title}}
@@ -37,11 +60,12 @@
         <button class="btn-delete" @click="deleteReview">리뷰 삭제</button>
       </div>
     </v-expansion-panel-content>
-
+  </v-expansion-panel>
   </div>
 </template>
 
 <script>
+
 import axios from 'axios'
 import CommentForm from "@/components/CommentForm"
 import CommentList from "@/components/CommentList"
@@ -62,7 +86,8 @@ name:"CommunityHomeItem",
         rank: this.review.rank
 
       },
-      count: this.review.click
+      count: this.review.click,
+      poster_path: ""
     }
   },
    props: {
@@ -76,6 +101,7 @@ name:"CommunityHomeItem",
         this.count = this.review.click
         this.count += 1
     },
+ 
     callAxiosDetailReview: function (review_pk) {
         axios({
           method: "GET", 

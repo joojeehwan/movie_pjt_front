@@ -1,7 +1,7 @@
 <template>
   <div class="community">
     <header>
-      <h2>리뷰 게시판</h2>
+      <h2>Community Board</h2>
     </header>
     <CommunityForm data-app/>
     <CommunityHome/>
