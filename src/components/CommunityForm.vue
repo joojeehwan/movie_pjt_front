@@ -6,8 +6,14 @@
         max-width="600px"
       >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="#831010" dark v-bind="attrs" v-on="on">
-          리뷰 작성
+        <v-btn color="#01579B" dark v-bind="attrs" v-on="on"
+        class="mx-2"
+        fab
+        large
+        >
+         <v-icon dark>
+          mdi-pencil
+        </v-icon>
         </v-btn>
       </template>
       <v-card dark>

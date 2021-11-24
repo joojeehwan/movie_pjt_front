@@ -7,17 +7,17 @@
      <v-simple-table>
     <thead>
           <tr>
-            <th class="text-left">
-              제목
+            <th class="text-left" >
+              <p>제목</p>
             </th>
             <th class="text-left">
-              작성일자
+              <p>작성일자</p>
             </th>
             <th class="text-left">
-              리뷰제목
+              <p>리뷰제목</p>
             </th>
             <th class="text-left">
-              조회수
+              <p>조회수</p>
             </th>
           </tr>
       </thead>
@@ -33,15 +33,7 @@
      
       </v-expansion-panel>
     </v-expansion-panels>
-    <div class="text-center">
-      <v-pagination
-        v-model="page"
-        :length="4"
-        circle
-        prev-icon="mdi-menu-left"
-        next-icon="mdi-menu-right"
-      ></v-pagination>
-    </div>
+
   </v-row>
 </div>
 </template>
@@ -52,11 +44,7 @@ import CommunityHomeItem from '@/components/CommunityHomeItem'
 
 export default {
   name: "CommunityHome", 
-  data() {
-    return {
-      page:1, 
-    }
-  },
+
   components: {
     CommunityHomeItem
   },
@@ -98,6 +86,12 @@ export default {
 </script>
 
 <style>
+
+th p {
+  text-align: center;
+  font-size: 25px;  
+  font-family: 'Noto Sans KR', sans-serif;
+}
 
 .v-expansion-panel input, textarea{
   color: white;

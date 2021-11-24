@@ -1,7 +1,18 @@
 <template>
   <div>
-    <input type="text" class="input-box" placeholder="댓글 내용" v-model="commentItem.content">
-    <button class="btn-create" @click="createComment">댓글 작성</button>
+    <input type="text" style="font-family: 'Noto Sans KR', sans-serif;" class="input-box" placeholder="댓글 내용" v-model="commentItem.content">
+    <v-btn 
+    class="btn-create mx-2" 
+    style="font-family: 'Noto Sans KR', sans-serif;"
+     @click="createComment"
+    fab
+    dark
+    color="indigo"
+     >
+      <v-icon dark>
+          mdi-plus
+        </v-icon>
+     </v-btn>
   </div>
 </template>
 
@@ -44,5 +55,10 @@ export default {
 </script>
 
 <style>
+.input-box {
+  width: 100px;
+  border-bottom: solid 1px white;
+  margin-right: 20px;
+}
 
 </style>

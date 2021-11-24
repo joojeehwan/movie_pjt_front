@@ -1,10 +1,10 @@
 <template>
   <div class="community">
     <header>
-      <h2>Community Board</h2>
+      <h2 class="text-white fw-bold fst-italic text-center fs-2">#Community Board</h2>
     </header>
-    <CommunityForm data-app/>
-    <CommunityHome/>
+    <CommunityForm class="CommunityForm" data-app/>
+    <CommunityHome calss="CommunityHome"/>
   </div>
   
 </template>
@@ -23,5 +23,9 @@ export default {
 </script>
 
 <style>
+
+.CommunityForm {
+  margin-top: 30px;
+}
 
 </style>

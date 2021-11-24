@@ -1,9 +1,7 @@
 <template>
    <div>
 
-     <v-expansion-panel
-      :readonly="false"
-      >
+     <v-expansion-panel>
       <v-expansion-panel-header
        @click="[callAxiosDetailReview(review.id),clickviews()]"
        v-model="count"
@@ -11,23 +9,23 @@
       >
       <v-row no-gutters>
       <v-col cols="3">
-       <p class="text-left" >  {{review.movie_title}} </p>
+       <p class="text-left" style="text-align:left; font-family: 'Noto Sans KR', sans-serif;"  >  {{review.movie_title}} </p>
       </v-col> 
       <v-col cols="9">
          <v-fade-transition leave-absolute>
-          <h5 v-if="open" style="text-align:left;">"what do you think about the movie?"</h5>
+          <h4 v-if="open" style="text-align:left; font-family: 'East Sea Dokdo', cursive;">"what do you think about the movie?"</h4>
         <v-row
               v-else
               no-gutters
               style="width: 100%"
           >
-        <v-col cols="4">
+        <v-col cols="4" style="text-align:left; font-family: 'Noto Sans KR', sans-serif; ">
          {{review.created_at |  moment('YYYY-MM-DD HH:mm:ss')}} 
         </v-col>
-        <v-col cols="4">
+        <v-col cols="4" style="font-family: 'Noto Sans KR', sans-serif;">
        {{review.title}}
         </v-col>
-        <v-col cols="4"> 
+        <v-col cols="4" style="text-align:center; font-family: 'Noto Sans KR', sans-serif;"> 
          {{count}}
         </v-col> 
         </v-row>
@@ -48,40 +46,46 @@
     <v-row no-gutters>
     <v-col cols="4">
     <v-expansion-panel-content class="text">
-      <p class="text-left">제목 : {{reviewItem.title}} </p>
+      <p class="text-left" style="font-family: 'Noto Sans KR', sans-serif;">제목 : {{reviewItem.title}} </p>
     </v-expansion-panel-content>
     </v-col>
     </v-row>
 
    <v-row no-gutters>
     <v-col cols="4">
-    <v-expansion-panel-content class="text">
+    <v-expansion-panel-content class="text" style="font-family: 'Noto Sans KR', sans-serif;">
       평점 : {{reviewItem.rank}}
     </v-expansion-panel-content>
     </v-col>
     </v-row>
     <v-row>
       <v-col cols="2">
-    <v-expansion-panel-content>
-      <textarea name="reviewContent" cols="50" rows="10" v-model="reviewItem.content" placeholder="내용">
-      </textareaname=>
-    </v-expansion-panel-content>
+        <div>
+        <v-expansion-panel-content>
+          <textarea style="width:700px;" name="reviewContent" cols="30" rows="30" v-model="reviewItem.content" placeholder="내용">
+          </textarea>
+        </v-expansion-panel-content>
+        </div>
       </v-col>
     </v-row>
   </div>
   <v-row>
     <v-col cols="4">
     <v-expansion-panel-content>
-      <h3>Comments</h3>
+      <div>
+        <button class="btn-modify" style="font-family: 'Noto Sans KR', sans-serif;" @click="updateReview">리뷰 수정</button>
+        <button class="btn-delete" style="font-family: 'Noto Sans KR', sans-serif;" @click="deleteReview">리뷰 삭제</button>
+      </div>
+    </v-expansion-panel-content>
+    </v-col>
+    <v-expansion-panel-content>
+      <v-col cols="4">
+      <h3 style="font-family: 'Noto Sans KR', sans-serif;">Comments</h3>
+      </v-col>
       <CommentForm :review="review"/>
       <CommentList :review="review"/>
     </v-expansion-panel-content>
-    <v-expansion-panel-content>
-      <div>
-        <button class="btn-modify" @click="updateReview">리뷰 수정</button>
-        <button class="btn-delete" @click="deleteReview">리뷰 삭제</button>
-      </div>
-    </v-expansion-panel-content>
+    <v-col cols="4">
     </v-col>
   </v-row>
   </v-expansion-panel>
@@ -193,6 +197,7 @@ name:"CommunityHomeItem",
 
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 
 .btn-modify {
   font-weight: bold;
@@ -208,7 +213,7 @@ name:"CommunityHomeItem",
   margin-left: 5px;
 }
 
-.v-expansion-panel input, textarea{
+.v-expansion-panel input{
   color: white;
 }
 
@@ -219,5 +224,12 @@ name:"CommunityHomeItem",
 }
 
 
-textarea {resize : vertical;} 
+textarea {
+  /* height: 6.25em; */
+	height:200px; 
+  resize:none;
+  /* width:50%; */
+   color: white;
+
+} 
 </style>

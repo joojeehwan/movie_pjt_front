@@ -1,9 +1,19 @@
 <template>
   <div>
    <v-text-field v-model="commentItem.content"></v-text-field>
-    <span> 댓글 작성일 : {{ comment.created_at | moment('YYYY-MM-DD HH:mm:ss')}}  </span>
-    <button class="btn btn-primary" @click="updateComment">댓글 수정</button>
-    <button class="btn btn-danger" @click="deleteComment">댓글 삭제</button>
+    <span style="font-family: 'Noto Sans KR', sans-serif;"> 댓글 작성일 : {{ comment.created_at | moment('YYYY-MM-DD HH:mm:ss')}}  </span>
+    <v-btn class="btn" style="font-family: 'Noto Sans KR', sans-serif;" @click="updateComment"
+     color="accent"
+      large
+      outlined
+      rounded
+    >댓글 수정</v-btn>
+    <v-btn class="btn" style="font-family: 'Noto Sans KR', sans-serif;" @click="deleteComment"
+    color="accent"
+    large
+      outlined
+      rounded
+    >댓글 삭제</v-btn>
   </div>
 </template>
 

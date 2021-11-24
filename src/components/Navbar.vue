@@ -25,9 +25,18 @@
                 v-model="inputValue"
                 @keyup.enter="searchKeyword"
                 type="search" class="form-control form-control-dark" placeholder="제목, 사람, 장르" aria-label="Search">
-              <button 
+              <v-btn
+                color="#01579B"
                 @click="searchKeyword"
-                type="button" class="btn btn-warning">Search</button>
+                type="button" class="btn btn-warning">
+                
+                <v-icon 
+                dark
+                >
+                mdi-check
+                </v-icon>
+                          
+                </v-btn>
             </div>            
           </div>
         </div>
@@ -93,6 +102,7 @@ export default {
 </script>
 
 <style>
+
 
 ul{
    list-style:none;
