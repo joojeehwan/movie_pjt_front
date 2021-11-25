@@ -208,6 +208,9 @@ export default {
   transition: transform 500ms;
 }
 
+
+
+
 .movie-item:focus  .movie-item,
 .movie-item:hover  .movie-item {
   /* 잠깐만 테스트 */  
