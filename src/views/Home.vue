@@ -1,9 +1,11 @@
 <template>
 <!-- style="margin-bottom: 81px" -->
   <div class="home bg-black" >    
-    <!-- <h1>Weekly Boxoffice Movies</h1> -->
-    <div class="p-5"> 
-      <p class="text-white fw-bold fst-italic text-start fs-4"># Weekly Boxoffice</p>
+    <div class="p-5">
+      <div>
+        <p class="text-white fw-bold fst-italic text-start fs-4"># Weekly Boxoffice</p>
+      </div>
+
       <div class="d-flex justify-content-center">
           <carousel-3d
             v-if="weeklyBoxOfficeMovieList.length"          
@@ -50,18 +52,42 @@
                 <img :src="weeklyBoxOfficeMovieList[i].poster_path" class="carousel-item-img">        
             </slide> -->
           </carousel-3d>
+          <div v-else>
+            <div class="spinner-border text-light" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
       </div>
     </div>
     <hr class="bg-white">
     
-    <!-- 디테일뷰 화면 위치 어떻게 옮기나 -->
-    <div id="slick1" style="height: 1px"> 
+    <!-- 디테일뷰 화면 위치 어떻게 옮기나 -->    
+    <div id="slick1" style="height: 1px">       
       <vue-slick-carousel v-if="topRatedMovieList.length">
         <MovieCard data-app :movie="tmpmovie"/>
       </vue-slick-carousel>
-      <!-- <MovieCard data-app v-for="(movie, idx) in topRatedMovieList" :key="idx" :movie="movie"/>         -->
+      <!-- <MovieCard data-app v-for="(movie, idx) in topRatedMovieList" :key="idx" :movie="movie"/>         -->      
     </div> 
     <!--  -->
+
+    <div style="height: 1px"  class="sticky-top text-end">
+      <div v-if="isLogin">             
+        <p>
+          <button class="btn btn-primary" type="button" @click="clickHashtags">
+            # Hashtags
+          </button>
+        </p>
+        <div :class="{'collapse': isCollapse, 'collapse-horizontal': isCollapse}">
+          <div class="bg-transparent fst-italic">            
+            <button v-for="(tag, index) in nameHashTags" :key="index"
+              class="btn btn-link text-decoration-none text-white"
+              @click="changeHashtags(index)">
+              #{{tag}}
+            </button>            
+          </div>
+        </div>
+      </div>
+    </div>
 
       
     <div class="p-5 my-slick">    
@@ -88,7 +114,7 @@
       <div class="p-5 my-slick">    
         <p class="text-white fw-bold fst-italic text-start fs-5">#{{nameHashTag1}}와(과) 관련된 영화들</p>
         <VueSlickCarousel 
-          :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" 
+          :arrows="true" :dots="true" :slidesToShow="5" :infinite="false" :draggable="isDots" 
           v-if="HashtagMovieList1.length">        
           <MovieCard       
             data-app    
@@ -135,16 +161,21 @@ export default {
     return {
       nameHashTag1: "",
       nameHashTag2: "",
+      nameHashTags: [],
 
       weeklyBoxOfficeMovieList: [],
       topRatedMovieList: [],
       HashtagMovieList1:[],
-      HashtagMovieList2:[],   
+      HashtagMovieList2:[], 
+      HashtagMovieLists: [],
+
       tmpmovie: {
           'poster_path': '',
           'title': '',
           'tmdb_id': '',
         },
+      isCollapse: true,
+      isDots: true,
     }
   },
 
@@ -180,7 +211,29 @@ export default {
       this.$nextTick(() => {
         this.$refs.slick.reSlick();
       })
+    },
+
+    clickHashtags: function() {     
+      this.isCollapse = !this.isCollapse      
+    },
+    getHashatgs: function() {    
+      for (var i = 1; i < 5; i++) {
+        axios({
+          method: "get", 
+          url: URL + `movies/searchHashtagMovies/${i}/`
+        })
+        .then(res =>{                    
+          this.nameHashTags.push(res.data["hashtag"])
+          this.HashtagMovieLists.push(res.data["movies"])
+        })
+      }
+    },
+    changeHashtags: function (index) {
+      this.nameHashTag1 = this.nameHashTags[index]
+      this.HashtagMovieList1 = this.HashtagMovieLists[index]
+      this.isDots = false      
     }
+
   },
   computed: {
      ...mapState([
@@ -190,6 +243,7 @@ export default {
   created() {
     // 수정하기 : state에 넣기
     // this.getWeeklyBoxOfficeMovieList()
+    this.getHashatgs()
     axios({
         method: 'get',
         url: URL+'movies/searchWeeklyBoxOfficeMovies',
@@ -263,7 +317,7 @@ export default {
   }
 
   .my-slick ul {
-    margin-left: 40%;    
+    margin-left: 43%;    
   } 
 
   .slick-dots li button:before{    
