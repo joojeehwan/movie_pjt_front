@@ -298,7 +298,7 @@ export default new Vuex.Store({
         console.log(res)
         commit('CREATE_REVIEW')
         router.push({name: 'Index'})
-        //router.go()
+        router.go()
       })
       .catch(err => console.log(err))
     },
