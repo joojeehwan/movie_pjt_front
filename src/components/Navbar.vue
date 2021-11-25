@@ -31,7 +31,7 @@
                 type="button" class="btn btn-warning">
                 
                 <v-icon 
-                dark
+                class="text-white"
                 >
                 mdi-check
                 </v-icon>

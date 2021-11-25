@@ -9,7 +9,7 @@
       <div class="d-flex justify-content-center">
           <carousel-3d
             v-if="weeklyBoxOfficeMovieList.length"          
-            :height='385'
+            :height='450'
             :width='300'
             :space="370"
             :count="weeklyBoxOfficeMovieList.length"          
@@ -330,8 +330,10 @@ export default {
   }
 
   .carousel-item-img {
-        height:43vh!important ;
-    }
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   .detail-area {
     position: relative;
